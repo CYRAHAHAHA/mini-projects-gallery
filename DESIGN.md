@@ -7,6 +7,8 @@ colors:
   ink: "#eef5f8"
   muted: "#b8c5ce"
   focus: "#ffe66d"
+  surface-ink: "#102131"
+  surface-muted: "#445663"
   commute-art: "#c0d9ed"
   commute-surface: "#edf7ff"
   sticker-art: "#ffcf5c"
@@ -16,13 +18,13 @@ colors:
 typography:
   display:
     fontFamily: "ui-rounded, Aptos, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(3.25rem, 8vw, 6.9rem)"
+    fontSize: "clamp(1.75rem, 8vw, 2.35rem)"
     fontWeight: 850
     lineHeight: 0.88
     letterSpacing: "-0.04em"
   title:
     fontFamily: "ui-rounded, Aptos, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(1.75rem, 3vw, 2.7rem)"
+    fontSize: "clamp(1.65rem, 7vw, 2.2rem)"
     fontWeight: 850
     lineHeight: 0.95
     letterSpacing: "-0.04em"
@@ -35,9 +37,16 @@ typography:
     fontSize: "0.73rem"
     fontWeight: 800
     letterSpacing: "0.05em"
+  micro:
+    fontFamily: "ui-rounded, Aptos, Segoe UI, system-ui, sans-serif"
+    fontSize: "0.55rem"
+    fontWeight: 900
+    letterSpacing: "0.05em"
 rounded:
   project-card: "15px"
   label-sheet: "8px"
+  label-cell: "4px"
+  phone-shell: "22px"
 spacing:
   edge: "1.5rem"
   card: "1.5rem"
@@ -59,13 +68,13 @@ components:
 
 **Creative North Star: "The Useful Tool Shelf"**
 
-This is a small, direct gallery for real browser tools. The framing stays deep and quiet; each project enters as a brightly coloured object with a purpose-built line illustration. It should feel like opening a concise, well-organised shelf rather than browsing a generic portfolio.
+This is a phone-first directory for real browser tools. The framing stays deep and quiet; each project enters as a brightly coloured object with a purpose-built line illustration. It should feel like opening a concise, well-organised shelf rather than browsing a generic portfolio.
 
-The layout earns attention through oversized plain-language type, clear project numbering, and a deliberate shift from the dark shared frame into each tool's distinct coloured environment. The page has no decorative background treatment, stock photography, or visual noise that competes with the tools themselves.
+The layout earns attention through one plain-language title and a deliberate shift from the dark shared frame into each tool's distinct coloured environment. The page has no decorative background treatment, stock photography, labels, or visual noise that competes with the tools themselves.
 
 **Key Characteristics:**
 
-- Quiet navy frame with high-contrast, large-scale type.
+- Quiet navy frame with one compact high-contrast title.
 - Each project is a colour-coded object, not an interchangeable content tile.
 - Geometric line art explains the tool before the visitor reads the description.
 - One visible action per project: open the live tool.
@@ -105,15 +114,15 @@ The palette uses a stable dark frame and three cheerful, task-specific project w
 - **Display:** reserved for the opening statement and held to a compact two-line composition.
 - **Title:** project names use the same heavy face and a compact line-height.
 - **Body:** practical descriptions remain relaxed and concise, with a readable measure.
-- **Label:** small, semibold project index and category text; use short labels only.
+- **Label:** used only inside the sticker-sheet illustration.
 
 **The Direct Language Rule.** Headings name the useful thing. Labels support orientation; they never become decorative copy.
 
 ## Layout
 
-The content container is capped at 1180px and breathes generously above the collection. The gallery is a twelve-column grid on large screens: the first two tools share a row and the BTO tool stretches across the full row with a split artwork/content composition. At 700px and below, the grid becomes one column and the BTO project stacks its artwork above its copy.
+The content container is capped at 430px and always uses a single vertical tool stack. On larger screens it remains a narrow, phone-shaped canvas centred in the viewport; it does not expand into a desktop dashboard. The 1rem outer gap and 1.35rem card interiors keep touch reading comfortable.
 
-Section rules, generous outer margins, and 1.5rem card interiors establish the rhythm. The page should remain a short, scannable visit rather than grow into a long marketing page.
+The page should remain a short, scannable visit: one title, then the tools.
 
 ## Elevation & Depth
 
@@ -129,7 +138,7 @@ Project cards use gently rounded corners, while the interior drawings use crisp 
 
 ### Project Cards
 
-- **Character:** Each card is a compact product poster: an illustrative object above or alongside a small information panel.
+- **Character:** Each card is a compact product poster: an illustrative object above a small information panel.
 - **Shape:** gentle card corner with a clear art/content divide.
 - **Background:** one saturated art surface paired with its pale supporting surface.
 - **Shadow Strategy:** flat at rest; low soft lift only on hover.
@@ -137,8 +146,7 @@ Project cards use gently rounded corners, while the interior drawings use crisp 
 
 ### Links
 
-- **Primary:** bold, underlined action text with a small northeast arrow.
-- **Secondary:** lower-emphasis source link with the same underline language.
+- **Primary:** bold, underlined action text with a small northeast arrow and a 44px minimum touch target.
 - **Focus:** strong visible outline in the signal focus colour, offset away from the text.
 
 ### Privacy Note

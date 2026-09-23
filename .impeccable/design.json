@@ -5,6 +5,8 @@
   "extensions": {
     "colorMeta": {
       "night": { "role": "primary", "displayName": "Night Shelf", "canonical": "#0d1b2a", "tonalRamp": ["#07101a", "#0d1b2a", "#13263a", "#24415d", "#4d6f8b", "#8ca9bd", "#c9dce7", "#eef5f8"] },
+      "surface-ink": { "role": "neutral", "displayName": "Surface Ink", "canonical": "#102131", "tonalRamp": ["#07111a", "#102131", "#203e54", "#496d85", "#7f9eae", "#b8cbd5", "#dde9ee", "#f4fafc"] },
+      "surface-muted": { "role": "neutral", "displayName": "Surface Muted", "canonical": "#445663", "tonalRamp": ["#172027", "#293944", "#445663", "#647b89", "#91a3ad", "#bdc9cf", "#dce4e8", "#f2f6f7"] },
       "focus": { "role": "primary", "displayName": "Signal Focus", "canonical": "#ffe66d", "tonalRamp": ["#4d4300", "#806e00", "#b5a000", "#e8cf37", "#ffe66d", "#ffed98", "#fff4bf", "#fffadf"] },
       "commute-art": { "role": "secondary", "displayName": "Commute Blue", "canonical": "#c0d9ed", "tonalRamp": ["#0d4169", "#28648d", "#508db7", "#83b9da", "#c0d9ed", "#d9eaf6", "#eaf5fc", "#f5fbff"] },
       "sticker-art": { "role": "secondary", "displayName": "Label Yellow", "canonical": "#ffcf5c", "tonalRamp": ["#5e3514", "#8a5419", "#b97922", "#e6a637", "#ffcf5c", "#ffe18c", "#fff0bb", "#fff9e5"] },
@@ -46,8 +48,8 @@
   ],
   "narrative": {
     "northStar": "The Useful Tool Shelf",
-    "overview": "This is a small, direct gallery for real browser tools. The framing stays deep and quiet; each project enters as a brightly coloured object with a purpose-built line illustration. It should feel like opening a concise, well-organised shelf rather than browsing a generic portfolio.",
-    "keyCharacteristics": ["Quiet navy frame with high-contrast, large-scale type.", "Each project is a colour-coded object, not an interchangeable content tile.", "Geometric line art explains the tool before the visitor reads the description.", "One visible action per project: open the live tool."],
+    "overview": "This is a phone-first directory for real browser tools. The framing stays deep and quiet; each project enters as a brightly coloured object with a purpose-built line illustration. It should feel like opening a concise, well-organised shelf rather than browsing a generic portfolio.",
+    "keyCharacteristics": ["Quiet navy frame with one compact high-contrast title.", "Each project is a colour-coded object, not an interchangeable content tile.", "Geometric line art explains the tool before the visitor reads the description.", "One visible action per project: open the live tool."],
     "rules": [
       { "name": "Distinct Tool Rule", "body": "Every project gets one coloured art field and one pale content field; do not introduce a fourth accent or blend the projects into one brand colour.", "section": "colors" },
       { "name": "Direct Language Rule", "body": "Headings name the useful thing. Labels support orientation; they never become decorative copy.", "section": "typography" },
