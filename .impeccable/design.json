@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-23T01:44:00Z",
+  "title": "Design System: Mini Projects Gallery",
+  "extensions": {
+    "colorMeta": {
+      "night": { "role": "primary", "displayName": "Night Shelf", "canonical": "#0d1b2a", "tonalRamp": ["#07101a", "#0d1b2a", "#13263a", "#24415d", "#4d6f8b", "#8ca9bd", "#c9dce7", "#eef5f8"] },
+      "focus": { "role": "primary", "displayName": "Signal Focus", "canonical": "#ffe66d", "tonalRamp": ["#4d4300", "#806e00", "#b5a000", "#e8cf37", "#ffe66d", "#ffed98", "#fff4bf", "#fffadf"] },
+      "commute-art": { "role": "secondary", "displayName": "Commute Blue", "canonical": "#c0d9ed", "tonalRamp": ["#0d4169", "#28648d", "#508db7", "#83b9da", "#c0d9ed", "#d9eaf6", "#eaf5fc", "#f5fbff"] },
+      "sticker-art": { "role": "secondary", "displayName": "Label Yellow", "canonical": "#ffcf5c", "tonalRamp": ["#5e3514", "#8a5419", "#b97922", "#e6a637", "#ffcf5c", "#ffe18c", "#fff0bb", "#fff9e5"] },
+      "home-art": { "role": "secondary", "displayName": "Home Green", "canonical": "#a7dbb3", "tonalRamp": ["#164b3f", "#337262", "#5b9a7b", "#84bf99", "#a7dbb3", "#c6ead0", "#e0f4e6", "#f2fbf3"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Shelf Statement", "purpose": "Opening statement only; the page's strongest reading moment." },
+      "title": { "displayName": "Tool Title", "purpose": "Names the project with compact, high-weight authority." },
+      "body": { "displayName": "Practical Body", "purpose": "Explains the tool in one concise sentence." },
+      "label": { "displayName": "Project Index", "purpose": "Short category and sequence labels." }
+    },
+    "shadows": [
+      { "name": "card-lift", "value": "0 18px 38px rgba(0, 0, 0, 0.26)", "purpose": "Applied only while a project card is hovered." }
+    ],
+    "motion": [
+      { "name": "card-lift", "value": "220ms cubic-bezier(.2,.8,.2,1)", "purpose": "Small upward card response on hover." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "700px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "A colour-coded gallery object that opens a real deployed tool.",
+      "html": "<article class=\"ds-project-card\"><p class=\"ds-label\">01 / CATEGORY</p><h3>SUTD Commute Cost</h3><p>One concise description of the tool.</p><a href=\"#\">Open tool ↗</a></article>",
+      "css": ".ds-project-card { max-width: 360px; padding: 24px; border: 1px solid rgba(13,27,42,.18); border-radius: 15px; background: #edf7ff; color: #0d1b2a; font-family: ui-rounded, Aptos, Segoe UI, system-ui, sans-serif; transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease; } .ds-project-card:hover { transform: translateY(-5px); box-shadow: 0 18px 38px rgba(0,0,0,.26); } .ds-project-card h3 { margin: 28px 0 12px; font-size: 2rem; line-height: .95; letter-spacing: -.04em; } .ds-project-card a { color: inherit; font-weight: 850; text-underline-offset: .22em; } .ds-project-card a:focus-visible { outline: 3px solid #ffe66d; outline-offset: 5px; } .ds-label { margin: 0; font-size: .73rem; font-weight: 800; letter-spacing: .05em; }"
+    },
+    {
+      "name": "Tool Link",
+      "kind": "custom",
+      "refersTo": "primary-link",
+      "description": "The direct, underlined action that takes a visitor to a live tool.",
+      "html": "<a class=\"ds-tool-link\" href=\"#\">Open tool <span aria-hidden=\"true\">↗</span></a>",
+      "css": ".ds-tool-link { color: #0d1b2a; font-family: ui-rounded, Aptos, Segoe UI, system-ui, sans-serif; font-weight: 850; text-decoration-thickness: 2px; text-underline-offset: .22em; } .ds-tool-link span { display: inline-block; margin-left: .2rem; transition: transform 180ms ease; } .ds-tool-link:hover span { transform: translate(2px,-2px); } .ds-tool-link:focus-visible { outline: 3px solid #ffe66d; outline-offset: 5px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Useful Tool Shelf",
+    "overview": "This is a small, direct gallery for real browser tools. The framing stays deep and quiet; each project enters as a brightly coloured object with a purpose-built line illustration. It should feel like opening a concise, well-organised shelf rather than browsing a generic portfolio.",
+    "keyCharacteristics": ["Quiet navy frame with high-contrast, large-scale type.", "Each project is a colour-coded object, not an interchangeable content tile.", "Geometric line art explains the tool before the visitor reads the description.", "One visible action per project: open the live tool."],
+    "rules": [
+      { "name": "Distinct Tool Rule", "body": "Every project gets one coloured art field and one pale content field; do not introduce a fourth accent or blend the projects into one brand colour.", "section": "colors" },
+      { "name": "Direct Language Rule", "body": "Headings name the useful thing. Labels support orientation; they never become decorative copy.", "section": "typography" },
+      { "name": "Lift Only on Intent Rule", "body": "Depth is a response to a hover or focus interaction, never permanent decoration.", "section": "elevation" }
+    ],
+    "dos": ["Do keep every card tied to a real project and a real deployment URL.", "Do author simple subject-specific SVG geometry when an icon helps explain a tool.", "Do preserve the dark shelf plus distinct coloured tool worlds as the collection grows.", "Do make keyboard focus and reduced-motion support visible in the implementation."],
+    "donts": ["Don't use generic portfolio thumbnails, stock-device mockups, or interchangeable icon cards.", "Don't add sign-up prompts, trackers, forms, user storage, or third-party font requests.", "Don't add decorative grid backgrounds, gradient text, glass panels, or floating metric widgets."]
+  }
+}
