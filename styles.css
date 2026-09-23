@@ -1,0 +1,214 @@
+:root {
+  color-scheme: dark;
+  --ink: #eef5f8;
+  --muted: #b8c5ce;
+  --night: #0d1b2a;
+  --night-soft: #13263a;
+  --line: rgba(238, 245, 248, 0.23);
+  --focus: #ffe66d;
+  font-family: ui-rounded, "Aptos", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: var(--night);
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+a { color: inherit; }
+
+a:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 5px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 5;
+  padding: .7rem 1rem;
+  background: var(--focus);
+  color: #17202c;
+  font-weight: 800;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus { transform: translateY(0); }
+
+main { width: min(1180px, calc(100% - 3rem)); margin: 0 auto; }
+
+.intro {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2.5rem;
+  padding: clamp(3.5rem, 9vw, 8rem) 0 clamp(4rem, 9vw, 7rem);
+}
+
+.folio,
+.card-label,
+.art-note {
+  margin: 0;
+  font-size: .73rem;
+  font-weight: 800;
+  letter-spacing: .05em;
+  line-height: 1.2;
+}
+
+.folio { grid-column: 1 / -1; color: #9fb7c7; }
+
+.intro-copy { max-width: 760px; }
+
+h1, h2, h3, p { margin-top: 0; }
+
+h1 {
+  max-width: 11ch;
+  margin-bottom: 1.25rem;
+  font-size: clamp(3.25rem, 8vw, 6.9rem);
+  font-weight: 850;
+  letter-spacing: -.04em;
+  line-height: .88;
+}
+
+.intro-copy > p {
+  max-width: 53ch;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.7vw, 1.23rem);
+}
+
+.privacy-note {
+  align-self: end;
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  max-width: 250px;
+  color: #d5e3ea;
+}
+
+.privacy-note svg { width: 1.35rem; flex: none; margin-top: .13rem; color: var(--focus); }
+.privacy-note p { margin: 0; font-size: .9rem; }
+
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--line);
+  padding: 1rem 0 1.6rem;
+}
+
+h2 { margin-bottom: 0; font-size: 1rem; letter-spacing: -.01em; }
+.section-heading p { margin-bottom: 0; color: #9fb7c7; font-size: .9rem; }
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+}
+
+.project-card {
+  display: flex;
+  min-height: 505px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(13, 27, 42, .18);
+  border-radius: 15px;
+  color: #102131;
+  isolation: isolate;
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease;
+}
+
+.project-card:hover { transform: translateY(-5px); box-shadow: 0 18px 38px rgba(0, 0, 0, .26); }
+.commute, .stickers { grid-column: span 6; }
+.bto { grid-column: span 12; min-height: 385px; flex-direction: row; }
+
+.card-art {
+  position: relative;
+  display: grid;
+  min-height: 255px;
+  place-items: center;
+  overflow: hidden;
+  padding: 1.4rem;
+}
+
+.commute .card-art { background: #c0d9ed; color: #0d4169; }
+.stickers .card-art { background: #ffcf5c; color: #5e3514; }
+.bto .card-art { width: 48%; min-height: 100%; background: #a7dbb3; color: #164b3f; }
+
+.card-symbol { width: min(43%, 165px); position: relative; z-index: 1; }
+.route-line { position: absolute; inset: 0; width: 100%; height: 100%; stroke: currentColor; stroke-width: 8; stroke-linecap: round; opacity: .7; }
+.route-dot { position: absolute; z-index: 1; width: 1.15rem; height: 1.15rem; border: 4px solid currentColor; border-radius: 50%; background: #c0d9ed; }
+.route-dot.start { left: 10%; bottom: 19%; }
+.route-dot.end { right: 9%; top: 28%; }
+
+.label-sheet { position: absolute; width: 148px; height: 188px; border: 3px solid currentColor; border-radius: 8px; }
+.sheet-back { transform: translate(28px, -13px) rotate(9deg); opacity: .4; }
+.sheet-front { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 15px; background: #fff5d8; box-shadow: 10px 10px 0 rgba(94, 53, 20, .13); }
+.sheet-front span { display: grid; place-items: center; border: 2px solid currentColor; border-radius: 4px; font-size: .55rem; font-weight: 900; letter-spacing: .08em; }
+.stickers .card-symbol { position: absolute; right: 8%; bottom: 7%; width: 70px; opacity: .25; }
+
+.house-mark { width: min(78%, 360px); }
+.art-note { position: absolute; right: 1.25rem; bottom: 1.2rem; transform: rotate(-90deg) translateX(100%); transform-origin: right bottom; color: rgba(22, 75, 63, .72); }
+
+.card-body { display: flex; flex: 1; flex-direction: column; padding: 1.5rem; }
+.commute .card-body { background: #edf7ff; }
+.stickers .card-body { background: #fff4d5; }
+.bto .card-body { justify-content: center; background: #eff8e9; padding: clamp(1.6rem, 5vw, 4rem); }
+
+.card-label { display: flex; justify-content: space-between; gap: .75rem; color: #526574; }
+.card-label span:first-child { color: #102131; }
+
+h3 {
+  max-width: 12ch;
+  margin: 2rem 0 .85rem;
+  font-size: clamp(1.75rem, 3vw, 2.7rem);
+  font-weight: 850;
+  letter-spacing: -.04em;
+  line-height: .95;
+}
+
+.bto h3 { max-width: 14ch; margin-top: 1.2rem; }
+.card-body > p { max-width: 40ch; margin-bottom: 1.6rem; color: #445663; }
+
+.card-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: auto; }
+.open-link { font-weight: 850; text-decoration-thickness: 2px; text-underline-offset: .22em; }
+.open-link span, footer span { display: inline-block; margin-left: .2rem; transition: transform 180ms ease; }
+.open-link:hover span, footer a:hover span { transform: translate(2px, -2px); }
+.source-link { color: #526574; font-size: .9rem; text-underline-offset: .22em; }
+
+footer {
+  display: flex;
+  width: min(1180px, calc(100% - 3rem));
+  justify-content: space-between;
+  gap: 1rem;
+  margin: clamp(4rem, 10vw, 8rem) auto 0;
+  border-top: 1px solid var(--line);
+  padding: 1.15rem 0 2.5rem;
+  color: #a8bbc7;
+  font-size: .9rem;
+}
+
+footer p { margin: 0; }
+footer a { color: var(--ink); text-underline-offset: .22em; }
+
+@media (max-width: 700px) {
+  main, footer { width: min(100% - 2rem, 520px); }
+  .intro { grid-template-columns: 1fr; gap: 2rem; }
+  .privacy-note { max-width: 300px; }
+  .section-heading, footer { align-items: flex-start; flex-direction: column; }
+  .commute, .stickers, .bto { grid-column: 1 / -1; }
+  .bto { min-height: 505px; flex-direction: column; }
+  .bto .card-art { width: 100%; min-height: 235px; }
+  h3 { margin-top: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
