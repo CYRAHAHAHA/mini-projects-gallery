@@ -70,6 +70,8 @@ components:
 
 This is a phone-first directory for real browser tools. The framing stays deep and quiet; each project enters as a brightly coloured object with a purpose-built line illustration. It should feel like opening a concise, well-organised shelf rather than browsing a generic portfolio.
 
+**Locked Style: Bold Flat-Vector Tool Posters.** This is the gallery's fixed visual language: thick rounded geometric SVG line art, flat saturated colour fields, and pale information surfaces. Future cards extend this system; they do not replace it.
+
 The layout earns attention through one plain-language title and a deliberate shift from the dark shared frame into each tool's distinct coloured environment. The page has no decorative background treatment, stock photography, labels, or visual noise that competes with the tools themselves.
 
 **Key Characteristics:**
@@ -101,6 +103,8 @@ The palette uses a stable dark frame and three cheerful, task-specific project w
 - **Tool Surfaces:** pale companion surfaces that preserve contrast within each project world.
 
 **The Distinct Tool Rule.** Every project gets one coloured art field and one pale content field; do not introduce a fourth accent or blend the projects into one brand colour.
+
+**The Poster Illustration Rule.** Illustrations are authored as simple, high-legibility SVG geometry in the established heavy rounded stroke. Do not substitute stock imagery, emoji, generic icon sets, or a different illustration treatment.
 
 ## Typography
 
@@ -161,10 +165,12 @@ Project cards use gently rounded corners, while the interior drawings use crisp 
 - **Do** keep every card tied to a real project and a real deployment URL.
 - **Do** author simple subject-specific SVG geometry when an icon helps explain a tool.
 - **Do** preserve the dark shelf plus distinct coloured tool worlds as the collection grows.
+- **Do** treat bold flat-vector tool-poster illustration as a locked brand commitment.
 - **Do** make keyboard focus and reduced-motion support visible in the implementation.
 
 ### Don't:
 
 - **Don't** use generic portfolio thumbnails, stock-device mockups, or interchangeable icon cards.
+- **Don't** introduce a competing visual language, including photoreal imagery, generic icon-library artwork, gradients, or glass effects.
 - **Don't** add sign-up prompts, trackers, forms, user storage, or third-party font requests.
 - **Don't** add decorative grid backgrounds, gradient text, glass panels, or floating metric widgets.

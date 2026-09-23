@@ -33,6 +33,11 @@ Visitors arrive from a shared link, the owner's GitHub profile, or another tool.
 - Must remain deployable as a GitHub Pages static site.
 - Future projects in the `mini_projects` parent folder should use the parent-scoped Impeccable skill for styling work.
 
+## Brand Commitments
+
+- The gallery's visual identity is locked to bold flat-vector illustration: thick, rounded geometric line art on saturated colour fields, paired with pale information surfaces.
+- New project cards must extend this vocabulary rather than introducing generic icon-library glyphs, stock imagery, gradients, glass effects, or a competing illustration style.
+
 ## Evidence on Hand
 
 - SUTD Commute Cost: `https://cyrahahaha.github.io/sutd-commute-cost/`
