@@ -13,7 +13,7 @@
       "home-art": { "role": "secondary", "displayName": "Home Green", "canonical": "#a7dbb3", "tonalRamp": ["#164b3f", "#337262", "#5b9a7b", "#84bf99", "#a7dbb3", "#c6ead0", "#e0f4e6", "#f2fbf3"] }
     },
     "typographyMeta": {
-      "display": { "displayName": "Shelf Statement", "purpose": "Opening statement only; the page's strongest reading moment." },
+      "display": { "displayName": "Shelf Statement", "purpose": "Opening statement only; scales from a compact phone heading to the page's strongest desktop reading moment." },
       "title": { "displayName": "Tool Title", "purpose": "Names the project with compact, high-weight authority." },
       "body": { "displayName": "Practical Body", "purpose": "Explains the tool in one concise sentence." },
       "label": { "displayName": "Project Index", "purpose": "Short category and sequence labels." }

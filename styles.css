@@ -118,8 +118,44 @@ h2 {
 }
 
 @media (min-width: 700px) {
-  body { padding: 2rem 0; }
-  main { min-height: auto; border: 1px solid rgba(238,245,248,.2); border-radius: 22px; }
+  body { padding: 3rem 0; }
+
+  main {
+    width: min(1180px, calc(100% - 3rem));
+    min-height: auto;
+    padding: 0;
+  }
+
+  h1 {
+    margin: 0 0 2rem;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+  }
+
+  .project-card { min-height: 480px; }
+  .commute, .stickers { grid-column: span 6; }
+
+  .bto {
+    grid-column: 1 / -1;
+    min-height: 370px;
+    flex-direction: row;
+  }
+
+  .bto .card-art {
+    width: 48%;
+    min-height: 100%;
+  }
+
+  .bto .card-body {
+    justify-content: center;
+    padding: clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .bto h2 { max-width: 15ch; }
 }
 
 @media (prefers-reduced-motion: reduce) {

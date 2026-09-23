@@ -18,7 +18,7 @@ colors:
 typography:
   display:
     fontFamily: "ui-rounded, Aptos, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(1.75rem, 8vw, 2.35rem)"
+    fontSize: "clamp(1.75rem, 8vw, 3.8rem)"
     fontWeight: 850
     lineHeight: 0.88
     letterSpacing: "-0.04em"
@@ -120,9 +120,9 @@ The palette uses a stable dark frame and three cheerful, task-specific project w
 
 ## Layout
 
-The content container is capped at 430px and always uses a single vertical tool stack. On larger screens it remains a narrow, phone-shaped canvas centred in the viewport; it does not expand into a desktop dashboard. The 1rem outer gap and 1.35rem card interiors keep touch reading comfortable.
+The content container is mobile-first. Phones use a single full-width vertical tool stack; at 700px and above, the first two cards share a row and the BTO card spans beneath them with its artwork and copy side by side. The page stays capped at 1180px so the grid remains compact rather than stretching across wide displays. The 1rem outer gap and 1.35rem card interiors keep touch reading comfortable.
 
-The page should remain a short, scannable visit: one title, then the tools.
+The page should remain a short, scannable visit: one title, then the tools, with no desktop-only content.
 
 ## Elevation & Depth
 
