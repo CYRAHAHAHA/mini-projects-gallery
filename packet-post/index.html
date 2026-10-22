@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#faf6ed"><meta name="description" content="A tiny postman. A big connected world. Learn networking and home server concepts through packet deliveries and sixteen hands-on simulated repair challenges.">
+  <meta name="theme-color" content="#faf6ed"><meta name="description" content="Explore a colorful networking world as a tiny postman. Move immediately, discover signboard lessons, deliver packets, and solve home server challenges.">
   <title>Packet Post — From packets to home servers</title>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./workshop.css">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./workshop.css"><link rel="stylesheet" href="./world.css?v=2.1.0">
 </head>
 <body>
   <header class="topbar">
@@ -12,7 +12,8 @@
     <nav aria-label="Game tools"><button id="lab-btn" aria-label="Open or close the home server workshop" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="11" rx="1"/><path d="m5 15-3 4h20l-3-4M10 17h4"/></svg><span>Home server</span></button><button id="journal-btn" aria-label="Open field guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5zM9 3v18M12 8h4M12 12h4"/></svg><span>Field guide</span><span id="term-count" class="count">0</span></button><button id="sound-btn" aria-label="Turn sound on" title="Turn sound on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6"/></svg></button><button id="pause-btn" aria-label="Pause game" title="Pause game"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg></button></nav>
   </header>
   <main id="town">
-    <aside class="dispatch">
+    <aside id="route-details" class="dispatch" aria-label="Delivery details" hidden>
+      <button id="route-close" class="route-close" aria-label="Close delivery details">×</button>
       <div class="chapter"><span class="chapter-dot"></span><span id="chapter">Chapter 1 · Hello, network</span></div>
       <h1>Small packets.<br>Big discoveries.</h1><p class="intro">Every connection starts<br>with a little delivery.</p>
       <div class="mission-heading"><h2>Your delivery</h2><span id="mission-number">1 / 6</span></div>
@@ -27,8 +28,11 @@
       <canvas id="world" tabindex="0" aria-label="Scrolling networking town. Move with arrow keys or WASD; E or Space to interact. You can also click or tap to walk."></canvas>
       <div class="location"><span class="live-dot"></span><div><b id="location-name">Loopback Meadows</b><small id="subnet-label">LOCAL NETWORK · 192.168.1.0/24</small></div></div>
       <button id="home-btn" class="map-button" title="Return to the post office" aria-label="Return to the post office"><svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7M6 10v10h12V10M10 20v-7h4v7"/></svg></button>
-      <div class="world-tag">A small world, connected.</div>
-      <div id="welcome" class="welcome"><div class="welcome-mail" aria-hidden="true"><svg viewBox="0 0 64 48"><rect x="3" y="4" width="58" height="40" rx="6"/><path d="m4 7 28 21L60 7M4 42l18-17M60 42 42 25"/></svg></div><div><h2>A little laptop. A big idea.</h2><p>Become a postman for packets, then turn an old laptop into a website, API, and database. Learn by finding and fixing real kinds of connection problems.</p><button id="workshop-start" class="primary">Build my home server <span>→</span></button><button id="start-btn" class="welcome-route">Start with the packet route →</button><small>No timers. Try, inspect, change, and retry.</small></div></div>
+      <button id="route-btn" class="quest-hud" aria-expanded="false" aria-controls="route-details"><svg viewBox="0 0 24 20" aria-hidden="true"><rect x="1" y="2" width="22" height="16" rx="4"/><path d="m2 4 10 7 10-7"/></svg><span><small>YOUR PACKET · <span id="hud-deliveries">0 / 6</span></small><b id="hud-address">192.168.1.5</b></span><span class="quest-expand">Details ↗</span></button>
+      <div id="spawn-note" class="spawn-note"><button id="spawn-close" aria-label="Dismiss movement tip">×</button><b>You’re the postman. Go explore!</b><span>Move with WASD, arrows, or the touch pad. Read colorful signboards with E, or tap them.</span></div>
+      <button id="trail-btn" class="trail-counter" aria-label="Open discovered signboard lessons"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V3M4 5h13l4 4-4 4H4z"/></svg><span id="trail-count">0 / 15 signs explored</span></button>
+      <div id="welcome" hidden><button id="start-btn">Explore the town</button><button id="workshop-start">Visit the workshop</button></div>
+      <section id="sign-panel" class="sign-panel" aria-labelledby="sign-title" hidden><button id="sign-close" class="sign-close" aria-label="Close signboard lesson">×</button><div class="sign-panel-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22V2M3 4h14l4 4-4 4H3z"/></svg></div><div><h2 id="sign-title" tabindex="-1"></h2><p id="sign-lesson"></p><p id="sign-try"></p><button id="sign-explore" class="primary">Explore this idea →</button><small>Keep moving whenever you like. Press Esc to close.</small></div></section>
       <div id="toast" role="status" aria-live="polite" hidden></div>
       <button id="interact-btn" class="interact" hidden><kbd>E</kbd><span>Deliver packet</span></button>
       <div id="celebration" class="celebration" role="region" aria-labelledby="success-title" hidden><span class="success-mark">✓</span><div><h2 id="success-title" tabindex="-1"></h2><p id="success-copy" aria-live="polite"></p><button id="next-btn" class="primary">Next delivery <span>→</span></button></div></div>
@@ -82,6 +86,6 @@
   <dialog id="ports"><h2>Right device. Which application?</h2><p>The destination IP identifies the device. The destination port identifies a service on that device. Your packet needs <b>HTTPS, port 443</b>.</p><div class="port-options"><button data-port="25">25 <small>SMTP · email</small></button><button data-port="443">443 <small>HTTPS · secure web</small></button><button data-port="22">22 <small>SSH · remote access</small></button></div><p id="port-feedback" role="status"></p><button class="close" aria-label="Close port selection">×</button></dialog>
   <dialog id="paused"><h2>Taking a little breather.</h2><p>Your packets can wait. Pick up where you left off.</p><button id="resume-btn" class="primary">Back to the route →</button></dialog>
   <dialog id="lab-guide"><button id="lab-guide-close" class="close" aria-label="Close workshop field guide">×</button><h2>Your home-server field guide</h2><p>Reference these terms when a problem makes them useful. Your completed repairs and explanations are saved below.</p><div id="lab-glossary"></div><h2 class="lab-notebook-title">Your repair notebook</h2><div id="lab-records"></div><p class="fine-print">Teaching approach: guided examples, goal-directed practice, progressively revealed hints, explanatory feedback, and later challenges that reuse earlier skills. This game has not been evaluated for learning effectiveness.</p><p class="fine-print"><a href="https://ies.ed.gov/ncee/wwc/PracticeGuide/1" target="_blank" rel="noopener">IES practice guide</a> · <a href="https://www.cmu.edu/teaching/principles/learning.html" target="_blank" rel="noopener">Carnegie Mellon learning principles</a> · <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/set_up_a_local_testing_server" target="_blank" rel="noopener">MDN: a local testing server</a></p></dialog>
-  <script type="module" src="./game.js"></script>
+  <script type="module" src="./game.js?v=2.1.0"></script>
 </body>
 </html>

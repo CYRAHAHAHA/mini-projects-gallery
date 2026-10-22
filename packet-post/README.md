@@ -1,8 +1,10 @@
 # Packet Post
 
-A tiny postman. A big connected world. A cozy, scrolling 2.5D browser game that teaches networking through six packet deliveries and sixteen home-server repair challenges, written in vanilla HTML, CSS, and JavaScript.
+A tiny postman. A colorful connected world. A cozy, scrolling 2.5D browser game that teaches networking through six packet deliveries and sixteen home-server repair challenges, written in vanilla HTML, CSS, and JavaScript.
 
 ## Play
+
+You can move immediately when the page loads. Explore the whole map, read fifteen colorful signboards with E or a nearby tap, and collect their explanations in your Field guide. The packet HUD opens optional delivery details. The map stays playable while a sign is open; there is no opening menu or start gate.
 
 - Move with WASD or arrow keys; click or tap open ground to walk there.
 - Stand near a mailbox or service and press E or Space, or use the interaction button.
@@ -15,7 +17,7 @@ The route introduces packets and IP addresses, a /24 subnet, a default gateway a
 
 ## Build a home server in the workshop
 
-Choose **Build my home server** on the welcome, the toolbar’s **Home server** control, or visit the old laptop in town.
+Choose the toolbar’s **Home server** control or visit the old laptop in town.
 
 Each problem gives you a concrete goal. Send a simulated HTTP request, read the chronological trace, change a setting, and retry. The sixteen challenges cover localhost, LAN access, binding, scoped firewall rules, API GET/POST and JSON, a private database, DHCP reservations, sleep, automatic service startup, tested backups, local DNS, VPN access behind CGNAT, and HTTPS. The last challenge requires independently restoring both a website and saved API data.
 
@@ -47,6 +49,7 @@ For a standalone repository, push this source to a public repository’s `main` 
 - `index.html`, `style.css`: responsive dispatch interface and accessible controls.
 - `game.js`: Canvas world, procedural scenery, character, collision, navigation, interactions, audio, and persistence.
 - `lessons.js`: networking explanations and lesson progression.
+- `trail.js`, `world.css`: fifteen in-world signboards and the colorful full-map interface.
 - `server-lab.js`: deterministic home-server simulation and sixteen problem definitions.
 - `workshop.js`, `workshop.css`: workshop controller, persistence, and responsive interface.
 - `tests/`: subnet and original-route checks, all sixteen workshop repairs, failure-mode checks, and workshop controller/save-resume tests.
