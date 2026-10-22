@@ -16,8 +16,8 @@ function boot(save=null){
   const get=id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);};
   const ports=[25,443,22].map(v=>{const b=new Element();b.dataset.port=''+v;return b;});
   const document={getElementById:get,createElement:()=>new Element(),querySelector:()=>[...elements.values()].find(e=>e.open),querySelectorAll:s=>s==='[data-port]'?ports:[],addEventListener(){}};
-  let stored=save,time=0;const context=vm.createContext({document,localStorage:{getItem:()=>stored,setItem:(_,v)=>stored=v},matchMedia:()=>({matches:true}),devicePixelRatio:1,ResizeObserver:class{observe(){}},performance:{now:()=>time},requestAnimationFrame(){},addEventListener(){},lessons,terms,console,Math,Map,Set,window:{}});
-  const source=fs.readFileSync(new URL('../game.js',import.meta.url),'utf8').replace(/^import[^\n]+\n/,'');
+  let stored=save,time=0;const context=vm.createContext({document,localStorage:{getItem:()=>stored,setItem:(_,v)=>stored=v},matchMedia:()=>({matches:true}),devicePixelRatio:1,ResizeObserver:class{observe(){}},performance:{now:()=>time},requestAnimationFrame(){},addEventListener(){},lessons,terms,initWorkshop:()=>({open(){},guide(){}}),console,Math,Map,Set,window:{}});
+  const source=fs.readFileSync(new URL('../game.js',import.meta.url),'utf8').replace(/^(?:import[^\n]+\n)+/,'');
   vm.runInContext(source+`;globalThis.game={state:()=>({stage,completed,forwarded,resolved,started,won}),visit:id=>{const m=mailbox(buildings.find(b=>b.id===id));player.x=m.x;player.y=m.y;tick(performance.now());},interact,blocked,navigate,route:()=>path,draw,tick};`,context);
   return {game:context.game,get,ports,start:()=>get('start-btn').onclick(),next:()=>get('next-btn').onclick(),stored:()=>stored};
 }

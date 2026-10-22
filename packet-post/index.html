@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#faf6ed"><meta name="description" content="A tiny postman. A big connected world. Learn real networking concepts by delivering packets in a cozy scrolling browser game.">
-  <title>Packet Post — A little delivery adventure</title>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css">
+  <meta name="theme-color" content="#faf6ed"><meta name="description" content="A tiny postman. A big connected world. Learn networking and home server concepts through packet deliveries and sixteen hands-on simulated repair challenges.">
+  <title>Packet Post — From packets to home servers</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./workshop.css">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="./" aria-label="Packet Post home"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="12" fill="#df6747"/><path d="M11 14h18v13H11zM11 14l9 7 9-7" fill="none" stroke="#fff9ef" stroke-width="2" stroke-linejoin="round"/></svg><span>packet<span class="brand-post">post</span><small>A LITTLE DELIVERY ADVENTURE</small></span></a>
-    <nav aria-label="Game tools"><button id="journal-btn" aria-label="Open field guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5zM9 3v18M12 8h4M12 12h4"/></svg><span>Field guide</span><span id="term-count" class="count">0</span></button><button id="sound-btn" aria-label="Turn sound on" title="Turn sound on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6"/></svg></button><button id="pause-btn" aria-label="Pause game" title="Pause game"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg></button></nav>
+    <nav aria-label="Game tools"><button id="lab-btn" aria-label="Open or close the home server workshop" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="11" rx="1"/><path d="m5 15-3 4h20l-3-4M10 17h4"/></svg><span>Home server</span></button><button id="journal-btn" aria-label="Open field guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5zM9 3v18M12 8h4M12 12h4"/></svg><span>Field guide</span><span id="term-count" class="count">0</span></button><button id="sound-btn" aria-label="Turn sound on" title="Turn sound on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6"/></svg></button><button id="pause-btn" aria-label="Pause game" title="Pause game"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg></button></nav>
   </header>
-  <main>
+  <main id="town">
     <aside class="dispatch">
       <div class="chapter"><span class="chapter-dot"></span><span id="chapter">Chapter 1 · Hello, network</span></div>
       <h1>Small packets.<br>Big discoveries.</h1><p class="intro">Every connection starts<br>with a little delivery.</p>
@@ -28,7 +28,7 @@
       <div class="location"><span class="live-dot"></span><div><b id="location-name">Loopback Meadows</b><small id="subnet-label">LOCAL NETWORK · 192.168.1.0/24</small></div></div>
       <button id="home-btn" class="map-button" title="Return to the post office" aria-label="Return to the post office"><svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7M6 10v10h12V10M10 20v-7h4v7"/></svg></button>
       <div class="world-tag">A small world, connected.</div>
-      <div id="welcome" class="welcome"><div class="welcome-mail" aria-hidden="true"><svg viewBox="0 0 64 48"><rect x="3" y="4" width="58" height="40" rx="6"/><path d="m4 7 28 21L60 7M4 42l18-17M60 42 42 25"/></svg></div><div><h2>Special delivery. That’s you!</h2><p>You’re the new postman. Carry your first <b>packet</b> to the device with the matching <b>IP address</b>.</p><button id="start-btn" class="primary">Let’s deliver <span>→</span></button><small>No timers. No wrong turns. Just curiosity.</small></div></div>
+      <div id="welcome" class="welcome"><div class="welcome-mail" aria-hidden="true"><svg viewBox="0 0 64 48"><rect x="3" y="4" width="58" height="40" rx="6"/><path d="m4 7 28 21L60 7M4 42l18-17M60 42 42 25"/></svg></div><div><h2>A little laptop. A big idea.</h2><p>Become a postman for packets, then turn an old laptop into a website, API, and database. Learn by finding and fixing real kinds of connection problems.</p><button id="workshop-start" class="primary">Build my home server <span>→</span></button><button id="start-btn" class="welcome-route">Start with the packet route →</button><small>No timers. Try, inspect, change, and retry.</small></div></div>
       <div id="toast" role="status" aria-live="polite" hidden></div>
       <button id="interact-btn" class="interact" hidden><kbd>E</kbd><span>Deliver packet</span></button>
       <div id="celebration" class="celebration" role="region" aria-labelledby="success-title" hidden><span class="success-mark">✓</span><div><h2 id="success-title" tabindex="-1"></h2><p id="success-copy" aria-live="polite"></p><button id="next-btn" class="primary">Next delivery <span>→</span></button></div></div>
@@ -37,11 +37,51 @@
       <div class="network-pill"><span></span> LOCAL CONNECTION <b id="connection">192.168.1.2</b></div>
     </section>
   </main>
+  <section id="workshop" class="workshop" aria-labelledby="lab-heading" hidden>
+    <aside class="lab-dispatch">
+      <button id="lab-back" class="text-button">← Back to the town</button>
+      <h1 id="lab-heading">Your old laptop,<br>online.</h1>
+      <p class="lab-intro">A home server, one solved problem at a time.</p>
+      <label class="lab-label" for="lab-jump">Your workshop route</label><select id="lab-jump" aria-label="Choose an unlocked workshop problem"></select>
+      <p id="lab-progress" class="lab-fine"></p>
+      <div class="lab-task"><p id="lab-problem-number" class="lab-fine"></p><h2 id="lab-mission-title" tabindex="-1"></h2><p id="lab-goal" class="lab-goal"></p><p id="lab-brief"></p><p id="lab-concepts" class="lab-concepts"></p></div>
+      <button id="lab-hint" class="lab-secondary">Open a hint</button><p id="lab-hint-text" class="lab-hint-text" aria-live="polite"></p>
+      <details id="lab-example"><summary>See a worked example</summary><p id="lab-example-copy"></p></details>
+      <p id="lab-attempts" class="lab-fine"></p><button id="lab-reset" class="text-button">Reset this challenge</button>
+      <button id="lab-guide-btn" class="text-button">Workshop field guide & notebook ↗</button><small id="lab-save-status" class="lab-fine"></small>
+    </aside>
+    <div class="lab-bench">
+      <div class="lab-bench-heading"><h2>The home server workshop</h2><span class="simulation-label">SIMULATION · NO REAL NETWORK CHANGES</span></div>
+      <div class="lab-device-strip" aria-label="Simulated laptop status"><span>Laptop IP <b id="lab-ip"></b></span><span id="lab-power"></span><span id="lab-web-status"></span><span id="lab-api-status"></span><span id="lab-db-status"></span></div>
+      <div id="lab-journey" class="lab-journey" aria-label="A request travels from the client to the laptop; API requests also query its private database">
+        <div class="journey-stop"><svg viewBox="0 0 64 56" aria-hidden="true"><rect x="19" y="3" width="26" height="46" rx="5"/><path d="M25 10h14M29 43h6"/></svg><strong>Client</strong><small>Asks for a page or data</small></div>
+        <div class="journey-link"><span class="journey-packet"><svg viewBox="0 0 24 18" aria-hidden="true"><rect x="1" y="1" width="22" height="16" rx="2"/><path d="m2 2 10 8L22 2"/></svg></span><span>request →<br>← response</span></div>
+        <div class="journey-stop laptop-stop"><svg viewBox="0 0 64 56" aria-hidden="true"><rect x="10" y="6" width="44" height="32" rx="3"/><path d="m10 38-7 8h58l-7-8M26 42h12"/></svg><strong>Your old laptop</strong><small>Web server & API processes</small></div>
+        <div id="lab-database-link" class="journey-link database-link"><span>local query →<br>← records</span></div>
+        <div id="lab-database-stop" class="journey-stop database-stop"><svg viewBox="0 0 64 56" aria-hidden="true"><ellipse cx="32" cy="12" rx="19" ry="8"/><path d="M13 12v29c0 11 38 11 38 0V12M13 26c0 11 38 11 38 0"/></svg><strong>Database</strong><small>Private · 127.0.0.1:5432</small></div>
+      </div>
+      <p class="lab-model-note">Your postman follows the request and brings the response back. An HTTP message may use many packets. All devices and traffic here are simulated.</p>
+      <form id="lab-form" class="lab-request" novalidate>
+        <h3>Try a connection</h3>
+        <div class="lab-request-row"><label class="lab-label" for="lab-client">Send from<select id="lab-client"><option value="laptop">Browser on the laptop</option><option value="phone">Phone · home Wi-Fi</option><option value="away">Client · away from home</option></select></label><label class="lab-label" for="lab-method">Method<select id="lab-method"><option>GET</option><option>POST</option></select></label><label class="lab-label lab-url-label" for="lab-url">Destination URL<input id="lab-url" type="text" maxlength="300" spellcheck="false" autocomplete="off" autocapitalize="off"></label><button id="lab-send" type="submit" class="primary">Send request →</button></div>
+        <label id="lab-body-field" class="lab-label" for="lab-body" hidden>JSON request body<textarea id="lab-body" rows="2" maxlength="2000" spellcheck="false" placeholder='{"text":"Your first note"}'></textarea></label>
+        <details class="lab-prediction"><summary>Make a prediction first <span>(optional)</span></summary><label class="lab-label" for="lab-prediction">What do you expect, and why?<input id="lab-prediction" type="text" maxlength="250" placeholder="I think this request will…"></label></details>
+        <p id="lab-api-hint" class="lab-fine" hidden>Website: HTTP 8080 / · Notes API: HTTP 3000 /api/notes · GET reads; POST creates.</p>
+      </form>
+      <div class="lab-work-area">
+        <section class="lab-observation" aria-labelledby="lab-observation-title"><h3 id="lab-observation-title">Follow your delivery</h3><p id="lab-placeholder" class="lab-fine">Send a request. The trace will show where it goes, where it stops, and whether a response comes back.</p><div id="lab-response" hidden><p id="lab-prediction-result" class="lab-fine"></p><p id="lab-stale" class="lab-stale" hidden>Settings or request changed. This trace is from your previous attempt; send again to verify.</p><ol id="lab-trace" class="lab-trace"></ol><div class="lab-response-summary" role="status" aria-live="polite"><strong id="lab-response-status"></strong><p id="lab-response-message"></p></div><div id="lab-page-preview" class="lab-page-preview" hidden><small>PAGE RECEIVED BY THE CLIENT</small><h3>Hello from my old laptop!</h3><p>A little computer, doing a useful job.</p></div><pre id="lab-response-body" class="lab-response-body"></pre></div></section>
+        <section class="lab-configuration" aria-labelledby="lab-settings-title"><h3 id="lab-settings-title">Inspect & change</h3><p class="lab-fine">Change a setting, then test. One change at a time makes the cause easier to see.</p><fieldset id="lab-settings" aria-label="Settings for this challenge"></fieldset><p id="lab-config-feedback" role="status" class="lab-fine"></p><details class="lab-inspection"><summary>Inspect addresses & storage</summary><dl><dt>Current LAN IP</dt><dd id="lab-inspect-ip">See status strip above</dd><dt>home.example · local DNS</dt><dd id="lab-dns-status"></dd><dt>Database storage</dt><dd id="lab-notes-count"></dd><dt>Database exposure</dt><dd>Loopback only; no LAN or public port</dd></dl></details></section>
+      </div>
+      <section id="lab-success" class="lab-success" aria-labelledby="lab-success-title" hidden><h2 id="lab-success-title" tabindex="-1"></h2><p id="lab-success-copy"></p><details><summary>Connect this to your real laptop</summary><p id="lab-transfer"></p></details><label class="lab-label" for="lab-reflection">What fixed it? Explain it in your own words <span>(optional)</span><textarea id="lab-reflection" maxlength="500" rows="2" placeholder="The first attempt failed because…"></textarea></label><button id="lab-next" class="primary">Next problem →</button></section>
+      <p class="lab-fine lab-limits">Each problem sets up a new scenario; settings may change between problems. Your note and progress carry forward. This models concepts, without installing software or changing real networks. The game itself is a static GitHub Pages site.</p>
+    </div>
+  </section>
   <footer><span>Made for curious minds. <b>One packet at a time.</b></span><span>LEARN BY EXPLORING <span class="footer-flower">✳</span></span></footer>
   <dialog id="guide"><button class="close" aria-label="Close field guide">×</button><h2>Your field guide</h2><p>Real networking terms, discovered on your route.</p><div id="guide-content"></div><button id="restart-btn" class="text-button">Start a fresh adventure</button></dialog>
   <dialog id="help"><button class="close" aria-label="Close controls">×</button><h2>A little help on your route</h2><p><b>Move:</b> WASD, arrow keys, or the touch arrows. Click or tap an open patch of ground to walk there.</p><p><b>Interact:</b> Stand near a mailbox or service and press E, Space, or the on-screen action button.</p><p><b>Find your way:</b> Match the packet’s destination to a device’s address. The hint button points you toward your next stop. The house button returns you to the post office.</p><p>Your completed deliveries save automatically on this browser when storage is available. Sound starts off.</p><p class="fine-print">This is a teaching simulation: your postman represents delivery; envelopes are packets. Real packets are forwarded electronically, and physical distance doesn’t define subnet membership. Addresses and hostnames here are illustrative.</p></dialog>
   <dialog id="ports"><h2>Right device. Which application?</h2><p>The destination IP identifies the device. The destination port identifies a service on that device. Your packet needs <b>HTTPS, port 443</b>.</p><div class="port-options"><button data-port="25">25 <small>SMTP · email</small></button><button data-port="443">443 <small>HTTPS · secure web</small></button><button data-port="22">22 <small>SSH · remote access</small></button></div><p id="port-feedback" role="status"></p><button class="close" aria-label="Close port selection">×</button></dialog>
   <dialog id="paused"><h2>Taking a little breather.</h2><p>Your packets can wait. Pick up where you left off.</p><button id="resume-btn" class="primary">Back to the route →</button></dialog>
+  <dialog id="lab-guide"><button id="lab-guide-close" class="close" aria-label="Close workshop field guide">×</button><h2>Your home-server field guide</h2><p>Reference these terms when a problem makes them useful. Your completed repairs and explanations are saved below.</p><div id="lab-glossary"></div><h2 class="lab-notebook-title">Your repair notebook</h2><div id="lab-records"></div><p class="fine-print">Teaching approach: guided examples, goal-directed practice, progressively revealed hints, explanatory feedback, and later challenges that reuse earlier skills. This game has not been evaluated for learning effectiveness.</p><p class="fine-print"><a href="https://ies.ed.gov/ncee/wwc/PracticeGuide/1" target="_blank" rel="noopener">IES practice guide</a> · <a href="https://www.cmu.edu/teaching/principles/learning.html" target="_blank" rel="noopener">Carnegie Mellon learning principles</a> · <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/set_up_a_local_testing_server" target="_blank" rel="noopener">MDN: a local testing server</a></p></dialog>
   <script type="module" src="./game.js"></script>
 </body>
 </html>
