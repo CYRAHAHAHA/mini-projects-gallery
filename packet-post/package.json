@@ -1,0 +1,1 @@
+{"name":"packet-post","version":"1.0.0","private":true,"type":"module","description":"A cozy vanilla JavaScript game about networking","scripts":{"start":"python3 -m http.server 8000","test":"node --test tests/*.test.js"}}

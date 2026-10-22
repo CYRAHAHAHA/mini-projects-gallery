@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#faf6ed"><meta name="description" content="A tiny postman. A big connected world. Learn real networking concepts by delivering packets in a cozy scrolling browser game.">
+  <title>Packet Post — A little delivery adventure</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Packet Post home"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="12" fill="#df6747"/><path d="M11 14h18v13H11zM11 14l9 7 9-7" fill="none" stroke="#fff9ef" stroke-width="2" stroke-linejoin="round"/></svg><span>packet<span class="brand-post">post</span><small>A LITTLE DELIVERY ADVENTURE</small></span></a>
+    <nav aria-label="Game tools"><button id="journal-btn" aria-label="Open field guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5zM9 3v18M12 8h4M12 12h4"/></svg><span>Field guide</span><span id="term-count" class="count">0</span></button><button id="sound-btn" aria-label="Turn sound on" title="Turn sound on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6"/></svg></button><button id="pause-btn" aria-label="Pause game" title="Pause game"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg></button></nav>
+  </header>
+  <main>
+    <aside class="dispatch">
+      <div class="chapter"><span class="chapter-dot"></span><span id="chapter">Chapter 1 · Hello, network</span></div>
+      <h1>Small packets.<br>Big discoveries.</h1><p class="intro">Every connection starts<br>with a little delivery.</p>
+      <div class="mission-heading"><h2>Your delivery</h2><span id="mission-number">1 / 6</span></div>
+      <article class="packet"><div class="packet-top"><span class="envelope-icon">▱</span><span>DATA PACKET</span><span class="stamp">PP</span></div><div class="address-label">DESTINATION IP</div><strong id="destination">192.168.1.5</strong><div id="packet-detail">Payload: “Hello, neighbor!”</div><div class="packet-bottom"><span>FROM <b>192.168.1.2</b></span><span id="packet-state">READY TO DELIVER</span></div></article>
+      <h3 id="mission-title">Your very first packet</h3><p id="mission-description" class="mission-description"></p>
+      <button id="hint-btn" class="text-button">Show me a hint <span>↗</span></button>
+      <div class="progress-section"><div><span>Your route so far</span><span id="progress-text">0 of 6 delivered</span></div><div id="progress" class="progress" aria-label="Delivery progress"></div></div>
+      <div class="mentor"><div class="mentor-face" aria-hidden="true">•ᴗ•</div><p id="mentor">Take your time. Good networks aren’t built in a rush.</p></div>
+      <button id="help-btn" class="text-button help-button">Movement & controls <span>?</span></button>
+    </aside>
+    <section class="playfield" aria-label="Packet Post game">
+      <canvas id="world" tabindex="0" aria-label="Scrolling networking town. Move with arrow keys or WASD; E or Space to interact. You can also click or tap to walk."></canvas>
+      <div class="location"><span class="live-dot"></span><div><b id="location-name">Loopback Meadows</b><small id="subnet-label">LOCAL NETWORK · 192.168.1.0/24</small></div></div>
+      <button id="home-btn" class="map-button" title="Return to the post office" aria-label="Return to the post office"><svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7M6 10v10h12V10M10 20v-7h4v7"/></svg></button>
+      <div class="world-tag">A small world, connected.</div>
+      <div id="welcome" class="welcome"><div class="welcome-mail" aria-hidden="true"><svg viewBox="0 0 64 48"><rect x="3" y="4" width="58" height="40" rx="6"/><path d="m4 7 28 21L60 7M4 42l18-17M60 42 42 25"/></svg></div><div><h2>Special delivery. That’s you!</h2><p>You’re the new postman. Carry your first <b>packet</b> to the device with the matching <b>IP address</b>.</p><button id="start-btn" class="primary">Let’s deliver <span>→</span></button><small>No timers. No wrong turns. Just curiosity.</small></div></div>
+      <div id="toast" role="status" aria-live="polite" hidden></div>
+      <button id="interact-btn" class="interact" hidden><kbd>E</kbd><span>Deliver packet</span></button>
+      <div id="celebration" class="celebration" role="region" aria-labelledby="success-title" hidden><span class="success-mark">✓</span><div><h2 id="success-title" tabindex="-1"></h2><p id="success-copy" aria-live="polite"></p><button id="next-btn" class="primary">Next delivery <span>→</span></button></div></div>
+      <div class="controls-note"><span><kbd>W</kbd><span class="wasd"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span></span><span>Move around<br><small>or click a path</small></span><i></i><kbd>E</kbd><span>Interact</span></div>
+      <div class="touch-controls" aria-label="Touch movement"><button data-dir="up" aria-label="Move up">↑</button><button data-dir="left" aria-label="Move left">←</button><button data-dir="down" aria-label="Move down">↓</button><button data-dir="right" aria-label="Move right">→</button></div>
+      <div class="network-pill"><span></span> LOCAL CONNECTION <b id="connection">192.168.1.2</b></div>
+    </section>
+  </main>
+  <footer><span>Made for curious minds. <b>One packet at a time.</b></span><span>LEARN BY EXPLORING <span class="footer-flower">✳</span></span></footer>
+  <dialog id="guide"><button class="close" aria-label="Close field guide">×</button><h2>Your field guide</h2><p>Real networking terms, discovered on your route.</p><div id="guide-content"></div><button id="restart-btn" class="text-button">Start a fresh adventure</button></dialog>
+  <dialog id="help"><button class="close" aria-label="Close controls">×</button><h2>A little help on your route</h2><p><b>Move:</b> WASD, arrow keys, or the touch arrows. Click or tap an open patch of ground to walk there.</p><p><b>Interact:</b> Stand near a mailbox or service and press E, Space, or the on-screen action button.</p><p><b>Find your way:</b> Match the packet’s destination to a device’s address. The hint button points you toward your next stop. The house button returns you to the post office.</p><p>Your completed deliveries save automatically on this browser when storage is available. Sound starts off.</p><p class="fine-print">This is a teaching simulation: your postman represents delivery; envelopes are packets. Real packets are forwarded electronically, and physical distance doesn’t define subnet membership. Addresses and hostnames here are illustrative.</p></dialog>
+  <dialog id="ports"><h2>Right device. Which application?</h2><p>The destination IP identifies the device. The destination port identifies a service on that device. Your packet needs <b>HTTPS, port 443</b>.</p><div class="port-options"><button data-port="25">25 <small>SMTP · email</small></button><button data-port="443">443 <small>HTTPS · secure web</small></button><button data-port="22">22 <small>SSH · remote access</small></button></div><p id="port-feedback" role="status"></p><button class="close" aria-label="Close port selection">×</button></dialog>
+  <dialog id="paused"><h2>Taking a little breather.</h2><p>Your packets can wait. Pick up where you left off.</p><button id="resume-btn" class="primary">Back to the route →</button></dialog>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
