@@ -6,7 +6,7 @@ A tiny postman. A colorful cube world of distinct network devices. A cozy, scrol
 
 Mira needs help preparing a neighborhood picnic. Carry six requests across independent maps, from welcoming a new computer to confirming the bakery’s order over HTTPS. Each briefing explains why the packet matters and where to go next. Maps introduce 2, 3, 4, 3, 4, and 4 devices as networking tasks become more complex.
 
-Move immediately in the selected map. **Menu → Choose a level** opens any map; **Replay this level** resets its delivery. The briefing stays above the map, and labels identify the next stop or nearby device. Optional **Show lesson signs** reveals the current map’s relevant explanation.
+Move immediately in the selected map. **Menu → Choose a level** opens any map; **Replay this level** resets its delivery. The map fills the screen. Your dispatch opens from the lower-left envelope at level start and folds when you walk; select the envelope to reread it. Its compact caption keeps your current objective visible. The floating upper-right Menu opens a translucent black panel, and packet details open in a dark drawer. Map labels identify the next stop or nearby device. Optional **Show lesson signs** reveals the current map’s relevant explanation.
 - Move with WASD or arrow keys; click or tap open ground to walk there.
 - Stand near a mailbox or service and press E or Space, or use the interaction button.
 - On phones, use the on-screen direction buttons.
@@ -64,10 +64,10 @@ No analytics, account, backend, external runtime dependencies, or remote font re
 
 An original 96 BPM pentatonic electronic score uses Web Audio: quiet triangle arpeggios, sine bass, and a bell-like melody over a 16-bar loop. It starts after a user gesture; the sound button mutes music and effects together and remembers the preference. Pause and hidden tabs suspend audio. Nodes disconnect after playback and a short scheduling horizon prevents a backlog after inactivity.
 
-Camera following clamps to the world rectangle independently of player movement. Resize updates the bounds and minimum zoom to cover extreme aspect ratios. The postman uses eight SVG walking poses at 12 frames/second, alternating lifted feet and counter-swinging arms, a slight body bounce, and horizontal facing. Idle, blocked movement, and reduced-motion preference use the still pose.
+Camera following clamps to a skyline-derived top bound and a 1200-unit world height independently of player movement. A vertical dead zone spanning 25%–72% of the viewport keeps roads higher with space below. Resize updates the bounds and minimum zoom to cover extreme aspect ratios. The postman uses eight SVG walking poses at 12 frames/second, alternating lifted feet and counter-swinging arms, a slight body bounce, and horizontal facing. Idle, blocked movement, and reduced-motion preference use the still pose. Reduced motion also removes menu, dispatch-letter, and details-drawer entrance animations.
 
 Regression checks cover camera containment, movement at a clamped edge, audio scheduling, context reuse, and mute/resume. Native Canvas world and walking-pose captures were inspected. Browser audio listening and touch behavior remain unverified.
 
-Review of the independent-map redesign is pending. Native Canvas captures cover world artwork only; browser HUD rendering and real device behavior remain unverified.
+Source and native Canvas review of the full-screen refinement is complete. Native Canvas captures cover world artwork only; browser HUD rendering and real device behavior remain unverified.
 
 The final code review resolved keyboard level selection, independent completion markers, glossary availability, and map hints. Native Canvas map captures were inspected; full browser UI remains unverified.

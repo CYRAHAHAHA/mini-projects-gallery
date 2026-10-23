@@ -1,6 +1,6 @@
 # Packet Post visual system
 
-The game is the main experience: a colorful low-poly cube town rendered on Canvas with authored SVG sprites, distinct network-role landmarks, contrasting IP labels, a river crossing, reachable mailboxes, and a block-bodied animated postman. Six independent maps keep attention on one narrative request at a time. A reserved briefing above the Canvas shows the purpose and next stop; Menu contains optional tools, level selection, and replay.
+The game is the main experience: a colorful low-poly cube town rendered on Canvas with authored SVG sprites, distinct network-role landmarks, contrasting IP labels, a river crossing, reachable mailboxes, and a block-bodied animated postman. Six independent maps keep attention on one narrative request at a time. The Canvas fills the screen at 100dvh. A lower-left envelope unfolds the purpose and next stop; a floating upper-right Menu opens a translucent black slideout with optional tools, level selection, and replay.
 
 ## Tokens
 
@@ -18,13 +18,13 @@ The game is the main experience: a colorful low-poly cube town rendered on Canva
 
 Outfit 500–700 supplies rounded display lettering; DM Sans 400–700 supplies controls and body text; monospace is limited to IP addresses and port data. Fonts are self-hosted. Menu controls use 14px text. Briefing typography is specified below; Canvas labels scale with the map.
 
-Desktop: 76px header, 188px reserved briefing, then Canvas in the remaining town viewport. At <=760px: 66px header, 232px scrollable briefing, then the map with touch controls. The briefing never overlays a destination. Its title is 23px desktop / 19px mobile; body copy is 13px / 12px. Optional packet details use a 310px drawer; reading panels scroll within available height. The footer is hidden. Ground, roads, water, and labels are Canvas geometry; network devices and the courier use authored SVG assets. There are no shipping raster assets.
+The map occupies the full viewport with no reserved header or briefing region. The envelope opens at each level start, folds when walking begins, and reopens through its button; its compact caption retains the current objective. Desktop dispatch width is 355px, with a 25px title and 13px body. At <=760px the envelope is 310px wide and sits above touch controls; its title is 22px and body is 12px. The warm paper letter scrolls within 55dvh desktop / 47dvh mobile. Menu uses a 340px translucent black slideout, capped at 90vw; optional packet details use a dark 355px drawer capped at 94vw. Reading panels scroll within available height. The footer is hidden. Ground, roads, water, and labels are Canvas geometry; network devices and the courier use authored SVG assets. There are no shipping raster assets.
 
-Warm paper panels frame grass and water. The nine-landmark asset catalog has distinct silhouettes and networking roles: packet depot, desktop client, phone client, network printer, old-laptop workshop, router/gateway, DNS directory, bakery web server, and remote host. Shared cube faces, consistent top/right lighting, plinths, ground shadows, depth sorting, and character-following camera movement establish 2.5D depth. Trees, signboards, mailboxes, and the postman complete the thirteen-sprite set. `scripts/build-sprites.py` authors the shipping files in `assets/sprites/`; no asset build is required to play.
+Warm paper dispatch letters and dark translucent controls float over grass and water. The nine-landmark asset catalog has distinct silhouettes and networking roles: packet depot, desktop client, phone client, network printer, old-laptop workshop, router/gateway, DNS directory, bakery web server, and remote host. Shared cube faces, consistent top/right lighting, plinths, ground shadows, depth sorting, and character-following camera movement establish 2.5D depth. Trees, signboards, mailboxes, and the postman complete the thirteen-sprite set. `scripts/build-sprites.py` authors the shipping files in `assets/sprites/`; no asset build is required to play.
 
 Straight arterial roads connect access spurs on each mailbox’s centerline. Bridge and road widths match. All road borders are drawn before all road surfaces, so intersections remain continuous. Road interiors avoid every solid landmark footprint; the independent maps omit decorative trees. Ground uses #8acb86, road surfaces #f8edcb with #d9e6d3 curbs and #5e997e borders, and water #62c7d3 with #399db9 banks. Address panels use #fff9e7 with #173e4c address ink; sign faces use #fff8dc with #173e3c text. Sprite face palettes use cream, cyan, mint, violet, gold, and dark blue, with separate lit and shaded faces.
 
-Motion is functional: walking, following camera, river movement, and a short delivery celebration. Reduced-motion settings remove character bob and water oscillation. Visible keyboard focus, named icon buttons, semantic dialogs, status messages, and focused delivery feedback support the HTML interface. Canvas exploration still requires visual navigation; full nonvisual gameplay is outside this release.
+Motion is functional: walking, following camera, river movement, and a short delivery celebration. Reduced-motion settings remove character bob, water oscillation, and menu, letter, and details-drawer entrance animations. Visible keyboard focus, named icon buttons, semantic dialogs, status messages, and focused delivery feedback support the HTML interface. Canvas exploration still requires visual navigation; full nonvisual gameplay is outside this release.
 
 Verification includes lesson and gameplay logic checks and road interiors avoiding building footprints. Native Canvas captures inspect world artwork; full browser UI rendering and device behavior remain unverified.
 
@@ -46,13 +46,13 @@ The default view shows only task landmarks, the current route, and target/nearby
 
 World artwork combines authored SVG sprites and Canvas ground geometry; native QA captures under .impeccable/review are not shipping assets. Runtime remains dependency-free vanilla HTML/CSS/JS.
 
-Current level logic checks pass. Native Canvas captures inspect world artwork only. Review of the independent-map redesign is pending; browser HUD rendering, audio listening, and real touch/device behavior remain unverified.
+Current level logic checks pass. Native Canvas captures inspect world artwork only. Source and native Canvas review of the full-screen refinement is complete; browser HUD rendering, audio listening, and real touch/device behavior remain unverified.
 
 ## Music, camera, and walking
 
 An original 96 BPM pentatonic electronic score uses Web Audio: quiet triangle arpeggios, sine bass, and a bell-like melody over a 16-bar loop. It starts after a user gesture; the sound button mutes music and effects together and remembers the preference. Pause and hidden tabs suspend audio. Nodes disconnect after playback and a short scheduling horizon prevents a backlog after inactivity.
 
-Camera following clamps to the world rectangle independently of player movement. Resize updates the bounds and minimum zoom to cover extreme aspect ratios. The postman uses eight SVG walking poses at 12 frames/second, alternating lifted feet and counter-swinging arms, a slight body bounce, and horizontal facing. Idle, blocked movement, and reduced-motion preference use the still pose.
+Camera following clamps to a skyline-derived top bound and a world height of 1200 units independently of player movement. A vertical dead zone from 25% to 72% of the viewport keeps the roads higher with open ground below; the camera follows vertically only outside that zone. Resize updates the bounds and minimum zoom to cover extreme aspect ratios. The postman uses eight SVG walking poses at 12 frames/second, alternating lifted feet and counter-swinging arms, a slight body bounce, and horizontal facing. Idle, blocked movement, and reduced-motion preference use the still pose.
 
 Regression checks cover camera containment, movement at a clamped edge, audio scheduling, context reuse, and mute/resume. Native Canvas world and walking-pose captures were inspected. Browser audio listening and touch behavior remain unverified.
 
