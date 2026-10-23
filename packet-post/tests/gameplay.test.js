@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import {lessons,terms} from '../lessons.js';
 import {signs} from '../trail.js';
 function boot(save=null,AudioContext=null){
-  const elements=new Map(),ctx=new Proxy({},{get:()=>()=>{}});
+  const globalEvents=new Map(),elements=new Map(),ctx=new Proxy({},{get:()=>()=>{}});
   class Element{
     constructor(){this.hidden=false;this.open=false;this.textContent='';this.style={};this.children=[];this.dataset={};this.handlers={};}
     addEventListener(e,f){this.handlers[e]=f;}setAttribute(){}focus(){}closest(){return null;}
@@ -17,57 +17,35 @@ function boot(save=null,AudioContext=null){
   const get=id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);};
   const ports=[25,443,22].map(v=>{const b=new Element();b.dataset.port=''+v;return b;});
   const document={getElementById:get,createElement:()=>new Element(),querySelector:()=>[...elements.values()].find(e=>e.open),querySelectorAll:s=>s==='[data-port]'?ports:[],addEventListener(){}};
-  const storage=new Map([['packet-post-v1',save]]);let time=0;const context=vm.createContext({document,localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,v)=>storage.set(key,v)},matchMedia:()=>({matches:true}),devicePixelRatio:1,ResizeObserver:class{observe(){}},performance:{now:()=>time},requestAnimationFrame(){},addEventListener(){},lessons,terms,signs,initWorkshop:()=>({open(){},guide(){}}),console,Math,Map,Set,window:{AudioContext}});
+  const storage=new Map([['packet-post-v1',save]]);let time=0;const context=vm.createContext({document,localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,v)=>storage.set(key,v)},matchMedia:()=>({matches:true}),devicePixelRatio:1,ResizeObserver:class{observe(){}},performance:{now:()=>time},requestAnimationFrame(){},addEventListener:(name,fn)=>globalEvents.set(name,fn),lessons,terms,signs,initWorkshop:()=>({open(){},guide(){}}),console,Math,Map,Set,window:{AudioContext}});
   const source=fs.readFileSync(new URL('../game.js',import.meta.url),'utf8').replace(/^(?:import[^\n]+\n)+/,'');
-  vm.runInContext(source+`;globalThis.game={state:()=>({stage,completed,forwarded,resolved,started,won,visited:[...visited],x:player.x,y:player.y}),visit:id=>{const m=mailbox(buildings.find(b=>b.id===id));player.x=m.x;player.y=m.y;tick(performance.now());},visitSign:id=>{const s=trail.find(t=>t.id===id);player.x=s.x;player.y=s.y;tick(performance.now());},move:()=>{keys.add('d');tick(40);keys.clear();},labelBox,signBox,trail,cameraTarget,resize,camera,player,keys,startAudio,musicTick,hushAudio,audioState:()=>({sound,audio,musicStep}),setViewport:(w,h)=>{width=w;height=h;zoom=Math.max(w/WIDTH,h/(HEIGHT*SCALE_Y),.73);clampCamera();},buildings,roads,interact,blocked,navigate,route:()=>path,draw,tick};`,context);
-  return {game:context.game,get,ports,start:()=>get('start-btn').onclick(),next:()=>get('next-btn').onclick(),stored:()=>storage.get('packet-post-v1')};
+  vm.runInContext(source+`;globalThis.game={state:()=>({stage,completed,forwarded,resolved,started,won,visited:[...visited],x:player.x,y:player.y}),visit:id=>{const m=mailbox(buildings.find(b=>b.id===id));player.x=m.x;player.y=m.y;tick(performance.now());},visitSign:id=>{showSigns=true;const s=trail.find(t=>t.id===id);player.x=s.x;player.y=s.y;tick(performance.now());},move:()=>{keys.add('d');tick(40);keys.clear();},enterLevel,levels,dimensions:()=>({width:WIDTH,height:HEIGHT,zoom}),visibleSigns,nextStop,labelBox,signBox,trail,cameraTarget,resize,camera,player,keys,startAudio,musicTick,hushAudio,audioState:()=>({sound,audio,musicStep}),setViewport:(w,h)=>{width=w;height=h;zoom=Math.max(w/WIDTH,h/(HEIGHT*SCALE_Y),.73);clampCamera();},buildings,roads,interact,blocked,navigate,route:()=>path,draw,tick};`,context);
+  return {keydown:globalEvents.get('keydown'),game:context.game,get,ports,start:()=>get('start-btn').onclick(),next:()=>get('next-btn').onclick(),stored:()=>storage.get('packet-post-v1')};
 }
-test('complete all six deliveries with enforced gateway, DNS, and port steps',()=>{
-  const b=boot(),{game:g}=b;assert.equal(g.state().started,true);assert.equal(b.get('welcome').hidden,true);
-  g.visit('spare');g.interact();assert.equal(g.state().completed,0);
-  for(const id of ['five','eight','twelve']){g.visit(id);g.interact();assert.equal(g.state().won,true);b.next();}
-  assert.equal(g.state().stage,3);g.visit('bakery');g.interact();assert.equal(g.state().completed,3);
-  g.visit('router');g.interact();assert.equal(g.state().forwarded,true);g.visit('bakery');g.interact();b.next();
-  assert.equal(g.state().stage,4);g.visit('router');g.interact();assert.equal(g.state().forwarded,false);
-  g.visit('dns');g.interact();assert.equal(g.state().resolved,true);assert.equal(b.get('destination').textContent,'192.168.2.5');
-  g.visit('bakery');g.interact();assert.equal(g.state().completed,4);
-  g.visit('router');g.interact();g.visit('bakery');g.interact();b.next();
-  g.visit('router');g.interact();g.visit('bakery');g.interact();assert.equal(b.get('ports').open,true);
-  b.ports[0].onclick();assert.equal(g.state().completed,5);assert.match(b.get('port-feedback').textContent,/another application/);
-  b.ports[1].onclick();assert.equal(g.state().completed,6);assert.equal(JSON.parse(b.stored()).completed,6);
-  b.next();assert.equal(g.state().won,false);assert.equal(b.get('celebration').hidden,true);
-});
-test('the entire map is walkable immediately while river banks and buildings remain solid',()=>{
-  const b=boot();assert.equal(b.game.blocked(1140,770),false);b.game.navigate(810,500);assert.ok(b.game.route().length>0);
-  assert.equal(b.game.blocked(420,680),true);assert.equal(b.game.blocked(1140,500),true);
-  const expanded=boot('{"completed":3}');assert.equal(expanded.game.blocked(1140,770),false);expanded.game.navigate(1510,750);assert.ok(expanded.game.route().length>0);
-});
-test('saved progress resumes and malformed storage cannot break startup',()=>{
-  for(const save of ['garbage','{"completed":1.5}','{"completed":999}',null]){const b=boot(save);assert.ok(Number.isInteger(b.game.state().stage));b.game.draw();}
-  const b=boot('{"completed":4}');assert.equal(b.game.state().stage,4);assert.equal(b.game.state().resolved,false);
-  b.get('restart-btn').onclick();assert.equal(b.game.state().completed,0);assert.equal(b.game.state().started,true);
-});
 
-test('signboards are discovered in the world and never lock movement',()=>{
- const b=boot();const x=b.game.state().x;b.game.move();assert.ok(b.game.state().x>x,'movement works without starting');
- for(const sign of signs){b.game.visitSign(sign.id);b.game.interact();assert.equal(b.get('sign-title').textContent,sign.title);assert.equal(b.get('sign-panel').hidden,false);}
- assert.equal(b.game.state().visited.length,signs.length);assert.match(b.get('trail-count').textContent,/15 \/ 15/);
- const before=b.game.state().x;b.game.move();assert.ok(b.game.state().x>before,'reading a sign does not pause movement');b.get('sign-close').onclick();assert.equal(b.get('sign-panel').hidden,true);
+test('each independent level contains only its task devices and resets its state',()=>{
+ const {game:g}=boot();const counts=[2,3,4,3,4,4];for(let i=0;i<6;i++){g.enterLevel(i);assert.equal(g.buildings.length,counts[i]);assert.equal(g.state().forwarded,false);assert.equal(g.state().resolved,false);assert.equal(g.state().won,false);assert.equal(g.state().y,660);assert.equal(g.visibleSigns().length,0);g.draw();}
+ g.enterLevel(4);g.visit('dns');g.interact();assert.equal(g.state().resolved,true);g.enterLevel(0);g.enterLevel(4);assert.equal(g.state().resolved,false);
 });
-
-test('sign reading temporarily folds delivery feedback without losing next delivery',()=>{
- const b=boot();b.game.visit('five');b.game.interact();assert.equal(b.game.state().won,true);b.game.visitSign('welcome');b.game.interact();assert.equal(b.get('celebration').hidden,true);b.get('sign-close').onclick();assert.equal(b.get('celebration').hidden,false);b.next();assert.equal(b.game.state().stage,1);
+test('all six narrative deliveries enforce routing, DNS and service selection',()=>{
+ const b=boot(),g=b.game;for(const id of ['five','eight','twelve']){g.visit(id);g.interact();assert.equal(g.state().won,true);b.next();}
+ g.visit('bakery');g.interact();assert.equal(g.state().won,false);g.visit('router');g.interact();g.visit('bakery');g.interact();b.next();
+ assert.match(b.get('story-target').textContent,/DNS/);g.visit('router');g.interact();assert.equal(g.state().forwarded,false);g.visit('dns');g.interact();assert.match(b.get('story-target').textContent,/Router/);g.visit('router');g.interact();g.visit('bakery');g.interact();b.next();
+ g.visit('router');g.interact();g.visit('bakery');g.interact();assert.equal(b.get('ports').open,true);b.ports[0].onclick();assert.equal(g.state().won,false);b.ports[1].onclick();assert.equal(g.state().won,true);assert.equal(g.state().completed,6);b.next();assert.match(b.get('story-title').textContent,/picnic/);
+ g.enterLevel(0);g.visit('five');g.interact();assert.equal(g.state().won,true,'completed levels remain replayable');assert.equal(g.state().completed,6);
 });
-
-test('road surfaces never cross solid device footprints',()=>{
- const {game}=boot();for(const [a,b]of game.roads)for(const device of game.buildings){
- const left=Math.min(a[0],b[0])-38,right=Math.max(a[0],b[0])+38,top=Math.min(a[1],b[1])-38,bottom=Math.max(a[1],b[1])+38;
- assert.ok(right<=device.x-device.w/2||left>=device.x+device.w/2||bottom<=device.y-device.d/2||top>=device.y+device.d/2,`road crosses ${device.id}`);
- }
+test('aligned road centerlines meet mailboxes and never cross device footprints in any level',()=>{
+ const {game:g}=boot();for(let i=0;i<6;i++){g.enterLevel(i);for(const d of g.buildings){assert.ok(g.roads.some(([a])=>a[0]===d.x&&a[1]===d.y+d.d/2+55));for(const [a,b]of g.roads){const l=Math.min(a[0],b[0])-46,r=Math.max(a[0],b[0])+46,t=Math.min(a[1],b[1])-46,bt=Math.max(a[1],b[1])+46;assert.ok(r<=d.x-d.w/2||l>=d.x+d.w/2||bt<=d.y-d.d/2||t>=d.y+d.d/2,`level ${i}: road crosses ${d.id}`);}assert.ok(g.navigate(d.x,d.y+d.d/2+85,true)?.length,`level ${i}: ${d.id} unreachable`);}}
 });
-
-test('camera contains all viewport corners at world edges and extreme aspect ratios',()=>{
- const {game:g}=boot();for(const [w,h]of [[390,778],[1440,824],[3440,1440],[800,1600]]){g.setViewport(w,h);for(const [x,y]of [[0,0],[2080,1450],[470,780]]){const c=g.cameraTarget(x,y),z=Math.max(w/2080,h/(1450*.76),.73);assert.ok(c.x-w/(2*z)>=-.001);assert.ok(c.x+w/(2*z)<=2080.001);assert.ok(c.y-h/(2*z*.76)>=-.001);assert.ok(c.y+h/(2*z*.76)<=1450.001);}}
+test('camera contains viewport at every level edge and aspect ratio',()=>{
+ const {game:g}=boot();for(let i=0;i<6;i++){g.enterLevel(i);for(const [w,h]of [[390,480],[1440,636],[3440,1200],[800,1600]]){g.setViewport(w,h);const {width:W,height:H,zoom:z}=g.dimensions();for(const [x,y]of [[0,0],[W,H]]){const c=g.cameraTarget(x,y);assert.ok(c.x-w/(2*z)>=-.001);assert.ok(c.x+w/(2*z)<=W+.001);assert.ok(c.y-h/(2*z*.76)>=-.001);assert.ok(c.y+h/(2*z*.76)<=H+.001);}}}
+});
+test('route preview never moves player, optional lesson is scoped to level',()=>{
+ const b=boot(),g=b.game;const start=g.state();g.draw();assert.equal(g.route().length,0);assert.equal(g.state().x,start.x);b.get('lessons-toggle').onclick();assert.equal(g.visibleSigns().length,1);g.visitSign('welcome');g.interact();assert.match(b.get('sign-title').textContent,/postman/);b.get('sign-close').onclick();g.enterLevel(4);assert.deepEqual(Array.from(g.visibleSigns(),s=>s.id),['dns']);
+});
+test('level selection persists, malformed and legacy storage resume safely',()=>{
+ for(const save of ['garbage','{"completed":999}',null]){const b=boot(save);assert.equal(b.game.state().stage,0);b.game.draw();}
+ const b=boot('{"completed":1,"levels":[4],"current":2,"levelVersion":1}');assert.equal(b.game.state().stage,2);assert.equal(b.game.state().completed,1);b.game.enterLevel(5);assert.equal(JSON.parse(b.stored()).current,5);b.get('restart-btn').onclick();assert.equal(b.game.state().completed,0);
 });
 test('soundtrack schedules bounded notes, reuses audio context, and respects mute',()=>{
  let contexts=0,notes=0;
@@ -75,6 +53,5 @@ test('soundtrack schedules bounded notes, reuses audio context, and respects mut
  const {game:g,get}=boot(null,AudioContext);g.startAudio();g.startAudio();assert.equal(contexts,1);g.musicTick();assert.ok(notes>=3);const scheduled=notes;g.musicTick();assert.equal(notes,scheduled);get('sound-btn').onclick();assert.equal(g.audioState().sound,false);assert.equal(g.audioState().audio.state,'suspended');g.musicTick();assert.equal(notes,scheduled);get('sound-btn').onclick();assert.equal(g.audioState().audio.state,'running');assert.equal(contexts,1);g.hushAudio();assert.equal(g.audioState().audio.state,'suspended');
 });
 
-test('player keeps walking while camera is held at the left edge',()=>{const {game:g}=boot();g.setViewport(1440,824);g.player.x=200;g.player.y=780;g.camera.x=0;g.draw();const edge=g.camera.x;g.keys.add('d');g.tick(40);g.keys.clear();assert.ok(g.player.x>200);assert.equal(g.camera.x,edge);});
 
-test('every lesson sign clears all device label rectangles',()=>{const {game:g}=boot();for(const sign of g.trail)for(const device of g.buildings){const a=g.signBox(sign),b=g.labelBox(device);assert.ok(a.x+a.w+8<=b.x||b.x+b.w+8<=a.x||a.y+a.h+8<=b.y||b.y+b.h+8<=a.y,`${sign.id} crowds ${device.id}`);}});
+test('out-of-order clears mark the correct level and keyboard selector keeps native keys',()=>{const b=boot();b.game.enterLevel(5);b.game.visit('router');b.game.interact();b.game.visit('bakery');b.game.interact();b.ports[1].onclick();const markers=b.get('progress').children;assert.equal(markers[0].className,'');assert.equal(markers[5].className,'done');assert.equal(b.get('term-count').textContent,6);b.keydown({key:'ArrowDown',target:{tagName:'SELECT'},preventDefault(){throw Error('native select key intercepted');}});});

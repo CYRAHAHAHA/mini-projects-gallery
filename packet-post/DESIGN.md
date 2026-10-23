@@ -1,6 +1,6 @@
 # Packet Post visual system
 
-The game is the main experience: a colorful low-poly cube town rendered on Canvas with authored SVG sprites, distinct network-role landmarks, contrasting IP labels, a river crossing, reachable mailboxes, and a block-bodied animated postman. The map fills the town viewport. A compact packet HUD opens optional delivery details; signboard lessons live in the world. Toolbar actions stay secondary to exploration.
+The game is the main experience: a colorful low-poly cube town rendered on Canvas with authored SVG sprites, distinct network-role landmarks, contrasting IP labels, a river crossing, reachable mailboxes, and a block-bodied animated postman. Six independent maps keep attention on one narrative request at a time. A reserved briefing above the Canvas shows the purpose and next stop; Menu contains optional tools, level selection, and replay.
 
 ## Tokens
 
@@ -16,17 +16,17 @@ The game is the main experience: a colorful low-poly cube town rendered on Canva
 | path | #f8edcb | Road surface |
 | water | #62c7d3 | Network crossing |
 
-Outfit 500–700 supplies rounded display lettering; DM Sans 400–700 supplies controls and body text; monospace is limited to IP addresses and port data. Fonts are self-hosted. Main title: 32px; game toolbar labels: 14px; mission title: 13px; supporting mission copy: 11px. Mobile mission copy: 10px. Canvas labels scale with the map.
+Outfit 500–700 supplies rounded display lettering; DM Sans 400–700 supplies controls and body text; monospace is limited to IP addresses and port data. Fonts are self-hosted. Menu controls use 14px text. Briefing typography is specified below; Canvas labels scale with the map.
 
-Desktop: 76px header and full-width Canvas in the remaining viewport. The 310px dispatch drawer starts hidden and opens from the packet HUD. At <=760px: 66px header, full-height map, touch direction pad, context-sensitive interaction button, and compact floating HUD. The drawer and signboard reading panel scroll within available height. The footer is hidden. World landmarks, props, and the courier use thirteen static SVG assets loaded and drawn on Canvas. Ground, roads, water, labels, and animated courier legs remain Canvas geometry. There are no shipping raster assets.
+Desktop: 76px header, 188px reserved briefing, then Canvas in the remaining town viewport. At <=760px: 66px header, 232px scrollable briefing, then the map with touch controls. The briefing never overlays a destination. Its title is 23px desktop / 19px mobile; body copy is 13px / 12px. Optional packet details use a 310px drawer; reading panels scroll within available height. The footer is hidden. Ground, roads, water, and labels are Canvas geometry; network devices and the courier use authored SVG assets. There are no shipping raster assets.
 
-Warm paper HUD panels sit over grass and water. The nine landmarks have distinct silhouettes and networking roles: packet depot, desktop client, phone client, network printer, old-laptop workshop, router/gateway, DNS directory, bakery web server, and remote host. Shared cube faces, consistent top/right lighting, plinths, ground shadows, depth sorting, and character-following camera movement establish 2.5D depth. Trees, signboards, mailboxes, and the postman complete the thirteen-sprite set. `scripts/build-sprites.py` authors the shipping files in `assets/sprites/`; no asset build is required to play.
+Warm paper panels frame grass and water. The nine-landmark asset catalog has distinct silhouettes and networking roles: packet depot, desktop client, phone client, network printer, old-laptop workshop, router/gateway, DNS directory, bakery web server, and remote host. Shared cube faces, consistent top/right lighting, plinths, ground shadows, depth sorting, and character-following camera movement establish 2.5D depth. Trees, signboards, mailboxes, and the postman complete the thirteen-sprite set. `scripts/build-sprites.py` authors the shipping files in `assets/sprites/`; no asset build is required to play.
 
-Straight arterial roads connect aligned access spurs to the mailboxes. All road borders are drawn before all road surfaces, so intersections remain continuous. Road interiors avoid every solid landmark footprint; vegetation avoids roads and label clearings. Ground uses #8acb86, road surfaces #f8edcb with #d9e6d3 curbs and #5e997e borders, and water #62c7d3 with #399db9 banks. Address panels use #fff9e7 with #173e4c address ink; sign faces use #fff8dc with #173e3c text. Sprite face palettes use cream, cyan, mint, violet, gold, and dark blue, with separate lit and shaded faces.
+Straight arterial roads connect access spurs on each mailbox’s centerline. Bridge and road widths match. All road borders are drawn before all road surfaces, so intersections remain continuous. Road interiors avoid every solid landmark footprint; the independent maps omit decorative trees. Ground uses #8acb86, road surfaces #f8edcb with #d9e6d3 curbs and #5e997e borders, and water #62c7d3 with #399db9 banks. Address panels use #fff9e7 with #173e4c address ink; sign faces use #fff8dc with #173e3c text. Sprite face palettes use cream, cyan, mint, violet, gold, and dark blue, with separate lit and shaded faces.
 
 Motion is functional: walking, following camera, river movement, and a short delivery celebration. Reduced-motion settings remove character bob and water oscillation. Visible keyboard focus, named icon buttons, semantic dialogs, status messages, and focused delivery feedback support the HTML interface. Canvas exploration still requires visual navigation; full nonvisual gameplay is outside this release.
 
-Verification: lesson and gameplay logic checks, including road interiors avoiding building footprints. The actual Canvas renderer was captured at desktop 1440×824, mobile 390×778, and a remote-network view using a native Canvas runtime. These inspect world artwork, not the HTML HUD. Full browser UI rendering and device behavior remain unverified.
+Verification includes lesson and gameplay logic checks and road interiors avoiding building footprints. Native Canvas captures inspect world artwork; full browser UI rendering and device behavior remain unverified.
 
 ## Home Server Workshop surface
 
@@ -38,16 +38,15 @@ Inline success feedback receives keyboard focus, includes practical transfer gui
 
 Verification includes engine checks for all sixteen problems, failure distinctions, JSON validation, private database boundaries, backup independence, autostart testing, VPN/CGNAT/TLS behavior, and controller checks for completion, resume without duplicate writes, hints, and storage denial. Browser visual and real device testing remain unavailable in this environment.
 
-## Signboard exploration
+## Task and map hierarchy
 
-Start immediately in control, without a welcome gate. The whole map is explorable, including the bridge; packet delivery prerequisites still apply. Next delivery leaves the character in place. Reading a sign and viewing a delivery success never block movement.
+Mira’s six picnic requests give each packet a purpose and a recipient reply. Maps contain 2, 3, 4, 3, 4, and 4 devices: a single address, address selection, local subnet, gateway, DNS lookup, and service port. Menu permits direct selection and replay. Each map entry clears transient routing and movement state and returns the courier to its depot. Cleared levels and the current selection are saved, with migration from the earlier completion count.
 
-Fifteen cube-style signboards introduce packet/IP, localhost, subnet/gateway, firewall, server process, DHCP, DNS, ports, HTTP, database, VPN/CGNAT, backup, and HTTPS. Near a board, E or tap opens an optional reading panel with an experiment and a walk-to-target button. Discoveries persist independently under packet-post-trail-v1 and appear in the field guide. Smaller boards show one topic title in-world; longer explanations use semantic HTML. Boards have no ground shadows and sit clear of device plaques. Device name/IP plaques render after the world objects, 18 Canvas units below each device front; when the courier overlaps a plaque, it shifts sideways if a candidate clears the other plaques, boards, and world edges. Sparse trees and plain grass keep these labels easy to locate. Redundant device captions are removed from the models. The desktop layers its base, stand, and screen in order; the laptop keyboard shares one oblique plane with a connected screen hinge. No score or mastery claim is attached to discovery.
+The default view shows only task landmarks, the current route, and target/nearby device labels. Optional lesson signs start hidden; enabling them shows one relevant sign for the current map. The fifteen-entry sign catalog and prior discoveries remain available to the Field guide, but fifteen boards no longer populate the world. Smaller boards show a single title; explanations use semantic HTML. Device plaques render after world objects and shift around the courier when a clear candidate exists. Redundant model captions are removed; desktop layering and the laptop keyboard plane remain corrected.
 
-World artwork combines authored SVG sprites and Canvas ground geometry; native QA captures live under .impeccable/review and are not shipping assets. Runtime remains dependency-free vanilla HTML/CSS/JS. Native Canvas was used only for QA.
+World artwork combines authored SVG sprites and Canvas ground geometry; native QA captures under .impeccable/review are not shipping assets. Runtime remains dependency-free vanilla HTML/CSS/JS.
 
-The earlier Canvas review found no material visual defects. Review of the current signage and device refinement is pending. A geometry regression checks that every sign box clears every default device plaque by at least 8 Canvas units. Native Canvas captures cover desktop, mobile, and the remote network; browser HUD rendering and touch/device behavior remain unverified.
-
+Current level logic checks pass. Native Canvas captures inspect world artwork only. Review of the independent-map redesign is pending; browser HUD rendering, audio listening, and real touch/device behavior remain unverified.
 
 ## Music, camera, and walking
 
@@ -57,4 +56,6 @@ Camera following clamps to the world rectangle independently of player movement.
 
 Regression checks cover camera containment, movement at a clamped edge, audio scheduling, context reuse, and mute/resume. Native Canvas world and walking-pose captures were inspected. Browser audio listening and touch behavior remain unverified.
 
-The visual reviewer accepted the geometry, label placement, and clutter fixes in native Canvas captures. Mobile world text remains small; full browser behavior is unverified.
+Mobile world text remains small; full browser behavior is unverified.
+
+The final code review resolved keyboard level selection, independent completion markers, glossary availability, and map hints. Native Canvas map captures were inspected; full browser UI remains unverified.

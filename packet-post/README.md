@@ -4,20 +4,21 @@ A tiny postman. A colorful cube world of distinct network devices. A cozy, scrol
 
 ## Play
 
-You can move immediately when the page loads. Explore the whole map, read fifteen colorful signboards with E or a nearby tap, and collect their explanations in your Field guide. The packet HUD opens optional delivery details. The map stays playable while a sign is open; there is no opening menu or start gate.
+Mira needs help preparing a neighborhood picnic. Carry six requests across independent maps, from welcoming a new computer to confirming the bakery’s order over HTTPS. Each briefing explains why the packet matters and where to go next. Maps introduce 2, 3, 4, 3, 4, and 4 devices as networking tasks become more complex.
 
+Move immediately in the selected map. **Menu → Choose a level** opens any map; **Replay this level** resets its delivery. The briefing stays above the map, and labels identify the next stop or nearby device. Optional **Show lesson signs** reveals the current map’s relevant explanation.
 - Move with WASD or arrow keys; click or tap open ground to walk there.
 - Stand near a mailbox or service and press E or Space, or use the interaction button.
 - On phones, use the on-screen direction buttons.
 - Consult your packet’s destination, the hint button, and the Field guide.
 
-There is no timer. Completed deliveries save in this browser when local storage is available. Sound is optional and off by default. The Field guide includes a fresh-start button.
+There is no timer. Cleared levels and the selected map save in this browser when local storage is available. Older delivery progress is preserved; entering a map resets forwarding and DNS state. Sound is optional and off by default. The Field guide includes a fresh-start button.
 
 The route introduces packets and IP addresses, a /24 subnet, a default gateway and router, a DNS A-record lookup, and TCP destination port 443 for HTTPS. Hostnames and addresses are illustrative. The postman represents delivery; envelopes represent packets. The map’s spatial boundary is a visual aid, not a definition of a subnet.
 
 ## Build a home server in the workshop
 
-Choose the toolbar’s **Home server** control or visit the old laptop in town.
+Choose **Menu → Home server**.
 
 Each problem gives you a concrete goal. Send a simulated HTTP request, read the chronological trace, change a setting, and retry. The sixteen challenges cover localhost, LAN access, binding, scoped firewall rules, API GET/POST and JSON, a private database, DHCP reservations, sleep, automatic service startup, tested backups, local DNS, VPN access behind CGNAT, and HTTPS. The last challenge requires independently restoring both a website and saved API data.
 
@@ -48,8 +49,8 @@ For a standalone repository, push this source to a public repository’s `main` 
 
 - `index.html`, `style.css`: responsive dispatch interface and accessible controls.
 - `game.js`: Canvas world, SVG sprite rendering, ground geometry, character, collision, navigation, interactions, audio, and persistence.
-- `lessons.js`: networking explanations and lesson progression.
-- `trail.js`, `world.css`: fifteen in-world signboards and the colorful full-map interface.
+- `lessons.js`: six narrative requests and networking explanations.
+- `trail.js`, `world.css`: lesson-sign catalog and the task briefing, Menu, and map interface.
 - `server-lab.js`: deterministic home-server simulation and sixteen problem definitions.
 - `workshop.js`, `workshop.css`: workshop controller, persistence, and responsive interface.
 - `tests/`: subnet and original-route checks, all sixteen workshop repairs, failure-mode checks, and workshop controller/save-resume tests.
@@ -67,4 +68,6 @@ Camera following clamps to the world rectangle independently of player movement.
 
 Regression checks cover camera containment, movement at a clamped edge, audio scheduling, context reuse, and mute/resume. Native Canvas world and walking-pose captures were inspected. Browser audio listening and touch behavior remain unverified.
 
-The visual reviewer accepted the geometry, label placement, and clutter fixes in native Canvas captures. Mobile world text remains small; full browser behavior is unverified.
+Review of the independent-map redesign is pending. Native Canvas captures cover world artwork only; browser HUD rendering and real device behavior remain unverified.
+
+The final code review resolved keyboard level selection, independent completion markers, glossary availability, and map hints. Native Canvas map captures were inspected; full browser UI remains unverified.
