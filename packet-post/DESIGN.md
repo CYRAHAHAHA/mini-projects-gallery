@@ -42,11 +42,11 @@ Verification includes engine checks for all sixteen problems, failure distinctio
 
 Start immediately in control, without a welcome gate. The whole map is explorable, including the bridge; packet delivery prerequisites still apply. Next delivery leaves the character in place. Reading a sign and viewing a delivery success never block movement.
 
-Fifteen cube-style signboards introduce packet/IP, localhost, subnet/gateway, firewall, server process, DHCP, DNS, ports, HTTP, database, VPN/CGNAT, backup, and HTTPS. Near a board, E or tap opens an optional reading panel with an experiment and a walk-to-target button. Discoveries persist independently under packet-post-trail-v1 and appear in the field guide. Titles are readable in-world; longer explanations use semantic HTML. No score or mastery claim is attached to discovery.
+Fifteen cube-style signboards introduce packet/IP, localhost, subnet/gateway, firewall, server process, DHCP, DNS, ports, HTTP, database, VPN/CGNAT, backup, and HTTPS. Near a board, E or tap opens an optional reading panel with an experiment and a walk-to-target button. Discoveries persist independently under packet-post-trail-v1 and appear in the field guide. Smaller boards show one topic title in-world; longer explanations use semantic HTML. Boards have no ground shadows and sit clear of device plaques. Device name/IP plaques render after the world objects, 18 Canvas units below each device front; when the courier overlaps a plaque, it shifts sideways if a candidate clears the other plaques, boards, and world edges. Sparse trees and plain grass keep these labels easy to locate. Redundant device captions are removed from the models. The desktop layers its base, stand, and screen in order; the laptop keyboard shares one oblique plane with a connected screen hinge. No score or mastery claim is attached to discovery.
 
 World artwork combines authored SVG sprites and Canvas ground geometry; native QA captures live under .impeccable/review and are not shipping assets. Runtime remains dependency-free vanilla HTML/CSS/JS. Native Canvas was used only for QA.
 
-Independent review found no material visual defects and approved shipping at the Canvas scope. Native Canvas captures cover desktop, mobile, and the remote network; browser HUD rendering and touch/device behavior remain unverified.
+The earlier Canvas review found no material visual defects. Review of the current signage and device refinement is pending. A geometry regression checks that every sign box clears every default device plaque by at least 8 Canvas units. Native Canvas captures cover desktop, mobile, and the remote network; browser HUD rendering and touch/device behavior remain unverified.
 
 
 ## Music, camera, and walking
@@ -56,3 +56,5 @@ An original 96 BPM pentatonic electronic score uses Web Audio: quiet triangle ar
 Camera following clamps to the world rectangle independently of player movement. Resize updates the bounds and minimum zoom to cover extreme aspect ratios. The postman uses eight SVG walking poses at 12 frames/second, alternating lifted feet and counter-swinging arms, a slight body bounce, and horizontal facing. Idle, blocked movement, and reduced-motion preference use the still pose.
 
 Regression checks cover camera containment, movement at a clamped edge, audio scheduling, context reuse, and mute/resume. Native Canvas world and walking-pose captures were inspected. Browser audio listening and touch behavior remain unverified.
+
+The visual reviewer accepted the geometry, label placement, and clutter fixes in native Canvas captures. Mobile world text remains small; full browser behavior is unverified.

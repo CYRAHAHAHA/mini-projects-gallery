@@ -36,7 +36,7 @@ cd packet-post
 python3 -m http.server 8000
 ```
 
-Open http://localhost:8000. Node.js 22 or newer can run `npm test` for lesson and gameplay logic checks. These checks execute the actual gameplay code against a minimal DOM; they do not replace a real browser rendering check.
+Open http://localhost:8000. Node.js 22 or newer can run `npm test` for lesson and gameplay logic checks. They include signboard clearance from device name/IP plaques. These checks execute the actual gameplay code against a minimal DOM; they do not replace a real browser rendering check.
 
 ## GitHub Pages
 
@@ -66,3 +66,5 @@ An original 96 BPM pentatonic electronic score uses Web Audio: quiet triangle ar
 Camera following clamps to the world rectangle independently of player movement. Resize updates the bounds and minimum zoom to cover extreme aspect ratios. The postman uses eight SVG walking poses at 12 frames/second, alternating lifted feet and counter-swinging arms, a slight body bounce, and horizontal facing. Idle, blocked movement, and reduced-motion preference use the still pose.
 
 Regression checks cover camera containment, movement at a clamped edge, audio scheduling, context reuse, and mute/resume. Native Canvas world and walking-pose captures were inspected. Browser audio listening and touch behavior remain unverified.
+
+The visual reviewer accepted the geometry, label placement, and clutter fixes in native Canvas captures. Mobile world text remains small; full browser behavior is unverified.

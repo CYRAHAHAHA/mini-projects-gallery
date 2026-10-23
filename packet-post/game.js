@@ -1,6 +1,6 @@
 import {lessons,terms} from './lessons.js';
 import {initWorkshop} from './workshop.js';
-import {signs} from './trail.js';
+import {signs} from './trail.js?v=2.3.1';
 const $=id=>document.getElementById(id), canvas=$('world'),ctx=canvas.getContext('2d');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const WIDTH=2080,HEIGHT=1450,SCALE_Y=.76,STORAGE='packet-post-v1';
@@ -26,7 +26,7 @@ const buildings=[
 const spriteNames=['packet-depot','desktop-client','phone-client','printer-client','laptop-workshop','router','dns-directory','web-server','remote-host','tree','signboard','mailbox','postman'];
 spriteNames.push(...Array.from({length:8},(_,i)=>'postman-walk-'+i));
 const sprites=new Map();
-if(typeof Image!=='undefined')for(const name of spriteNames){const img=new Image();img.src='./assets/sprites/'+name+'.svg?v=2.3.0';sprites.set(name,img);}
+if(typeof Image!=='undefined')for(const name of spriteNames){const img=new Image();img.src='./assets/sprites/'+name+'.svg?v=2.3.1';sprites.set(name,img);}
 function sprite(name,x,y,size=240){const img=sprites.get(name);if(!img?.complete||!img.naturalWidth)return false;ctx.drawImage(img,x-size/2,y-size*220/240,size,size*260/240);return true;}
 const modelById={post:'packet-depot',five:'desktop-client',eight:'phone-client',twelve:'printer-client',spare:'laptop-workshop',router:'router',dns:'dns-directory',bakery:'web-server',remote:'remote-host'};
 const names={post:'Packet depot',five:'Desktop client',eight:'Phone client',twelve:'Network printer',spare:'Old laptop · Workshop',router:'Router · Gateway',dns:'DNS directory',bakery:'Bakery · Web server',remote:'Remote host'};
@@ -36,8 +36,8 @@ const roads=[[[110,770],[1930,770]],[[570,260],[570,1300]],[[845,260],[845,1300]
 for(const b of buildings){const m=mailbox(b),lane=b.x<600?570:b.x<1080?845:1590;roads.push([[lane,m.y+36],[m.x,m.y+36]]);}
 function onRoad(x,y,pad=0){return roads.some(([a,b])=>x>=Math.min(a[0],b[0])-42-pad&&x<=Math.max(a[0],b[0])+42+pad&&y>=Math.min(a[1],b[1])-42-pad&&y<=Math.max(a[1],b[1])+42+pad);}
 const trees=[];let seed=42;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}
-for(let i=0;i<125;i++){const x=65+rand()*1950,y=70+rand()*1300;if(onRoad(x,y,35)||(x>1040&&x<1230)||Math.abs(y-770)<92||buildings.some(b=>Math.abs(x-b.x)<b.w*.7+55&&Math.abs(y-b.y)<130)||Math.abs(x-490)<70||Math.abs(x-730)<75||trail.some(sign=>Math.abs(x-sign.x)<130&&y>sign.y-75&&y<sign.y+200)||buildings.some(b=>Math.abs(x-b.x)<b.w/2+70&&y>b.y+40&&y<b.y+310))continue;trees.push({x,y,s:.65+rand()*.7,c:rand()});}
-const flowers=Array.from({length:290},()=>({x:50+rand()*1980,y:40+rand()*1370,c:rand()}));
+for(let i=0;i<65;i++){const x=65+rand()*1950,y=70+rand()*1300;if(onRoad(x,y,35)||(x>1040&&x<1230)||Math.abs(y-770)<92||buildings.some(b=>Math.abs(x-b.x)<b.w*.7+55&&Math.abs(y-b.y)<130)||Math.abs(x-490)<70||Math.abs(x-730)<75||trail.some(sign=>Math.abs(x-sign.x)<130&&y>sign.y-75&&y<sign.y+200)||buildings.some(b=>Math.abs(x-b.x)<b.w/2+70&&y>b.y+40&&y<b.y+310))continue;trees.push({x,y,s:.65+rand()*.7,c:rand()});}
+
 function persist(){try{localStorage.setItem(STORAGE,JSON.stringify({completed}));}catch{}}
 function toast(message){$('toast').textContent=message;$('toast').hidden=false;toastTime=7;}
 // Original 16-bar pentatonic score: soft clockwork arpeggios, bass and bell melody.
@@ -86,7 +86,7 @@ addEventListener('keydown',e=>{if(workshopVisible)return;if(document.querySelect
 addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));addEventListener('blur',()=>{keys.clear();path=[];});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){keys.clear();path=[];hushAudio();}else startAudio();last=performance.now();});
 for(const b of document.querySelectorAll('[data-dir]')){const key={up:'w',left:'a',down:'s',right:'d'}[b.dataset.dir];b.onpointerdown=e=>{e.preventDefault();b.setPointerCapture(e.pointerId);if(started){keys.add(key);path=[];}};for(const event of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(event,()=>keys.delete(key));}
-canvas.addEventListener('pointerdown',e=>{if(!started||paused)return;canvas.focus();const r=canvas.getBoundingClientRect(),x=(e.clientX-r.left-width/2)/zoom+camera.x,y=((e.clientY-r.top-height/2)/zoom+camera.y*SCALE_Y)/SCALE_Y;const clickedSign=trail.find(sign=>Math.abs(x-sign.x)<83&&y>sign.y-110/SCALE_Y&&y<sign.y+25);if(clickedSign){if(Math.hypot(player.x-clickedSign.x,(player.y-clickedSign.y)*SCALE_Y)<105){readSign(clickedSign);}else navigate(clickedSign.x,clickedSign.y+45);return;}const clicked=buildings.find(b=>Math.abs(x-b.x)<b.w*.8&&y>b.y-b.d/2-b.h/SCALE_Y&&y<b.y+b.d/2+70);if(clicked){const m=mailbox(clicked);if(Math.hypot(player.x-m.x,player.y-m.y)<100){near=clicked;interact();}else navigate(m.x,m.y+30);}else navigate(x,y);});
+canvas.addEventListener('pointerdown',e=>{if(!started||paused)return;canvas.focus();const r=canvas.getBoundingClientRect(),x=(e.clientX-r.left-width/2)/zoom+camera.x,y=((e.clientY-r.top-height/2)/zoom+camera.y*SCALE_Y)/SCALE_Y;const clickedSign=trail.find(sign=>Math.abs(x-sign.x)<70&&y>sign.y-90/SCALE_Y&&y<sign.y+25);if(clickedSign){if(Math.hypot(player.x-clickedSign.x,(player.y-clickedSign.y)*SCALE_Y)<105){readSign(clickedSign);}else navigate(clickedSign.x,clickedSign.y+45);return;}const clicked=buildings.find(b=>Math.abs(x-b.x)<b.w*.8&&y>b.y-b.d/2-b.h/SCALE_Y&&y<b.y+b.d/2+70);if(clicked){const m=mailbox(clicked);if(Math.hypot(player.x-m.x,player.y-m.y)<100){near=clicked;interact();}else navigate(m.x,m.y+30);}else navigate(x,y);});
 function cameraTarget(x,y){const halfW=width/(2*zoom),halfH=height/(2*zoom*SCALE_Y);return{x:Math.max(halfW,Math.min(WIDTH-halfW,x)),y:Math.max(halfH,Math.min(HEIGHT-halfH,y))};}
 function clampCamera(){Object.assign(camera,cameraTarget(camera.x,camera.y));}
 function resize(){const rect=canvas.getBoundingClientRect();width=rect.width;height=rect.height;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);zoom=Math.max(width/WIDTH,height/(HEIGHT*SCALE_Y),width<600?.73:Math.min(1.05,Math.max(.78,width/1050)));clampCamera();}new ResizeObserver(resize).observe(canvas);
@@ -107,7 +107,6 @@ function drawGround(){
   const by=770*SCALE_Y;ctx.fillStyle='#486d79';ctx.fillRect(1060,by-45,180,99);ctx.fillStyle='#e6e9ca';ctx.fillRect(1060,by-45,180,83);
   for(let x=1064;x<1240;x+=22){ctx.fillStyle='#b6c6b6';ctx.fillRect(x,by-45,2,83);}for(const y of[by-48,by+35]){ctx.fillStyle='#faf3cd';ctx.fillRect(1056,y,188,8);}
   text('192.168.1.0/24',390,155,25,'#285c4d','Outfit');text('LOOPBACK MEADOWS',390,177,10,'#285c4d');text('192.168.2.0/24',1630,130,25,'#285c4d','Outfit');text('SUNRISE SUBNET',1630,152,10,'#285c4d');
-  for(const f of flowers){if(onRoad(f.x,f.y,10)||f.x>1055&&f.x<1240||buildings.some(b=>Math.abs(f.x-b.x)<b.w&&Math.abs(f.y-b.y)<150))continue;ctx.fillStyle=f.c>.5?'#d6eeb4':'#72b980';ctx.fillRect(f.x,f.y*SCALE_Y,5,3);}
 }
 function drawTree(t){sprite('tree',t.x,t.y*SCALE_Y,115*t.s);}
 function drawHouse(b){
@@ -116,17 +115,19 @@ function drawHouse(b){
  const m=mailbox(b),my=m.y*SCALE_Y;sprite('mailbox',m.x,my,95);
  const active=!won&&completed<6&&b.id===nextStop().id;
  if(active){ctx.beginPath();ctx.ellipse(m.x,my+8,21,9,0,0,Math.PI*2);ctx.strokeStyle='#fff9db';ctx.lineWidth=3;ctx.stroke();const lift=reduced?0:Math.sin(clock*3)*4;poly([[m.x-7,my-53+lift],[m.x+7,my-53+lift],[m.x,my-43+lift]],'#fff9db');}
- const lw=Math.max(152,b.name.length*7+20),ly=front+56;round(x-lw/2,ly,lw,43,5,'#fff9e7');text(b.name,x,ly+16,12,'#234d4c','Outfit');text(b.ip,x,ly+34,14,'#173e4c','monospace');
 }
+function labelBox(b){const w=Math.max(152,b.name.length*7+20);return{x:b.x-w/2,y:(b.y+b.d/2)*SCALE_Y+18,w,h:43};}
+function signBox(sign){return{x:sign.x-66,y:sign.y*SCALE_Y-87,w:132,h:58};}
+function drawLabel(b){let box=labelBox(b);const overlaps=(a,c)=>a.x<c.x+c.w&&a.x+a.w>c.x&&a.y<c.y+c.h&&a.y+a.h>c.y;const courier={x:player.x-24,y:player.y*SCALE_Y-74,w:48,h:78};if(overlaps(box,courier)){const candidates=[{...box,x:courier.x-box.w-12},{...box,x:courier.x+courier.w+12}];const clear=candidates.find(c=>!trail.some(t=>overlaps(c,signBox(t)))&&!buildings.some(other=>other!==b&&overlaps(c,labelBox(other)))&&c.x>10&&c.x+c.w<WIDTH-10);if(clear)box=clear;}const center=box.x+box.w/2;round(box.x,box.y,box.w,box.h,5,'#fff9e7');text(b.name,center,box.y+16,12,'#234d4c','Outfit');text(b.ip,center,box.y+34,14,'#173e4c','monospace');}
 function drawSign(sign){const x=sign.x,y=sign.y*SCALE_Y,seen=visited.has(sign.id),active=near?.kind==='sign'&&near.id===sign.id;
- sprite('signboard',x,y,202);text(sign.label[0],x-3,y-82,13,'#173e3c','Outfit');text(sign.label[1],x-3,y-66,9,'#173e3c','Outfit');
- if(seen){round(x+68,y-106,16,16,3,'#226b55');line([[x+71,y-98],[x+75,y-94],[x+81,y-102]],'#fffbe8',2);}
+ sprite('signboard',x,y,166);text(sign.label[0],x-3,y-64,12,'#173e3c','Outfit');
+ if(seen){round(x+54,y-88,14,14,3,'#226b55');line([[x+57,y-81],[x+60,y-78],[x+65,y-84]],'#fffbe8',2);}
  if(active){round(x-45,y+13,90,24,5,'#fffdf1');text('E · READ SIGN',x,y+29,10,'#173e3c','Outfit');}}
 function drawPlayer(){const x=player.x,y=player.y*SCALE_Y,frame=walking&&!reduced?Math.floor(clock*12)%8:null,bob=frame===null?0:Math.abs(Math.sin(clock*12*Math.PI/4))*1.5;
  ellipse(x+3,y+3,15,6,'#24495735');ctx.save();ctx.translate(x,y);ctx.scale(player.face<0?-1:1,1);sprite(frame===null?'postman':'postman-walk-'+frame,0,-bob,95);ctx.restore();
 }
 function drawHint(){if(!started||won||hintUntil<=clock||completed===6)return;const b=nextStop(),m=mailbox(b);ctx.save();ctx.setLineDash([6,12]);ctx.strokeStyle='#c38a5990';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(player.x,player.y*SCALE_Y+8);ctx.lineTo(m.x,m.y*SCALE_Y+8);ctx.stroke();ctx.restore();}
-function draw(){clampCamera();ctx.clearRect(0,0,width,height);ctx.fillStyle='#8acb86';ctx.fillRect(0,0,width,height);ctx.save();ctx.translate(width/2-camera.x*zoom,height/2-camera.y*SCALE_Y*zoom);ctx.scale(zoom,zoom);drawGround();drawHint();const objects=[...trees.map(t=>({y:t.y,render:()=>drawTree(t)})),...buildings.map(b=>({y:b.y+b.d/2,render:()=>drawHouse(b)})),...trail.map(sign=>({y:sign.y,render:()=>drawSign(sign)})),{y:player.y,render:drawPlayer}].sort((a,b)=>a.y-b.y);for(const o of objects)o.render();for(const p of particles){ctx.globalAlpha=Math.max(0,p.life/1.8);round(p.x,p.y*SCALE_Y,5,5,1,p.c);}ctx.globalAlpha=1;ctx.restore();}
+function draw(){clampCamera();ctx.clearRect(0,0,width,height);ctx.fillStyle='#8acb86';ctx.fillRect(0,0,width,height);ctx.save();ctx.translate(width/2-camera.x*zoom,height/2-camera.y*SCALE_Y*zoom);ctx.scale(zoom,zoom);drawGround();drawHint();const objects=[...trees.map(t=>({y:t.y,render:()=>drawTree(t)})),...buildings.map(b=>({y:b.y+b.d/2,render:()=>drawHouse(b)})),...trail.map(sign=>({y:sign.y,render:()=>drawSign(sign)})),{y:player.y,render:drawPlayer}].sort((a,b)=>a.y-b.y);for(const o of objects)o.render();for(const b of buildings)drawLabel(b);for(const p of particles){ctx.globalAlpha=Math.max(0,p.life/1.8);round(p.x,p.y*SCALE_Y,5,5,1,p.c);}ctx.globalAlpha=1;ctx.restore();}
 function tick(now){const dt=Math.min(.04,(now-last)/1000||0);last=now;musicTick();if(workshopVisible){requestAnimationFrame(tick);return;}const active=!paused&&!document.querySelector('dialog[open]');walking=false;if(active){clock+=dt;if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('toast').hidden=true;}
   if(started){let dx=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0),dy=(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0);if(path.length&&!dx&&!dy){const p=path[0],dist=Math.hypot(p.x-player.x,p.y-player.y);if(dist<7)path.shift();else{dx=(p.x-player.x)/dist;dy=(p.y-player.y)/dist;}}const len=Math.hypot(dx,dy);if(len){const oldX=player.x,oldY=player.y;$('spawn-note').hidden=true;if(dx)player.face=dx>0?1:-1;const speed=190*dt;const nx=player.x+dx/len*speed,ny=player.y+dy/len*speed/SCALE_Y;if(!blocked(nx,player.y))player.x=nx;if(!blocked(player.x,ny))player.y=ny;walking=player.x!==oldX||player.y!==oldY;}
     near=null;let min=90;for(const b of buildings){const m=mailbox(b),dist=Math.hypot(player.x-m.x,(player.y-m.y)*SCALE_Y);if(dist<min){min=dist;near=b;}}
