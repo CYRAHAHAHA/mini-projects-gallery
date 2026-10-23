@@ -23,3 +23,9 @@ Workshop storage is independent of the original game. Store current scenario, co
 The user explicitly asked for immediate map movement, more game-like exploration, signboard lessons throughout, more color and contrast, and rounded scenery. Start the postman already active; remove the welcome gate and fixed dispatch sidebar. Keep the map primary with floating HUD controls. All areas are explorable from the start; packets for remote subnets still require gateway forwarding. Retain six deliveries and the optional sixteen-problem workshop.
 
 Add fifteen in-world signboards with nearby E/tap reading, contextual experiments, persistent discovery, and field-guide recall. Reading is optional and nonblocking. Preserve player position between deliveries and allow movement during delivery feedback. Signboard discovery, original route progress, and workshop progress use separate storage keys.
+
+## Cube-world visual brief
+
+The user requested SVG sprites with a low-poly cube 3D appearance, meaningful differences between network roles instead of repeated houses, and aligned roads. Represent the nine destinations as a packet depot, desktop, phone, printer, old laptop, router, DNS directory, bakery web server, and remote host. Use a consistent cube style for the courier, trees, signs, and mailboxes, with straight connected arterial roads and access spurs that avoid building footprints.
+
+This visual redesign preserves immediate gameplay, six deliveries, fifteen discoverable signs, and the sixteen-scenario Home Server Workshop, including their independent saved progress. Ship static SVG assets drawn on Canvas with no new runtime dependencies.

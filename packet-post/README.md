@@ -1,6 +1,6 @@
 # Packet Post
 
-A tiny postman. A colorful connected world. A cozy, scrolling 2.5D browser game that teaches networking through six packet deliveries and sixteen home-server repair challenges, written in vanilla HTML, CSS, and JavaScript.
+A tiny postman. A colorful cube world of distinct network devices. A cozy, scrolling 2.5D browser game that teaches networking through six packet deliveries and sixteen home-server repair challenges, written in vanilla HTML, CSS, and JavaScript.
 
 ## Play
 
@@ -47,12 +47,13 @@ For a standalone repository, push this source to a public repository’s `main` 
 ## Files
 
 - `index.html`, `style.css`: responsive dispatch interface and accessible controls.
-- `game.js`: Canvas world, procedural scenery, character, collision, navigation, interactions, audio, and persistence.
+- `game.js`: Canvas world, SVG sprite rendering, ground geometry, character, collision, navigation, interactions, audio, and persistence.
 - `lessons.js`: networking explanations and lesson progression.
 - `trail.js`, `world.css`: fifteen in-world signboards and the colorful full-map interface.
 - `server-lab.js`: deterministic home-server simulation and sixteen problem definitions.
 - `workshop.js`, `workshop.css`: workshop controller, persistence, and responsive interface.
 - `tests/`: subnet and original-route checks, all sixteen workshop repairs, failure-mode checks, and workshop controller/save-resume tests.
+- `assets/sprites/`: thirteen authored SVG sprites for nine network landmarks, trees, signs, mailboxes, and the courier. `scripts/build-sprites.py` regenerates them; no build is needed to play.
 - `assets/fonts/`: self-hosted DM Sans and Outfit, with their SIL Open Font Licenses.
 
 No analytics, account, backend, external runtime dependencies, or remote font requests. Original game source is MIT licensed; font licenses are separate.

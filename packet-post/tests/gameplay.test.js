@@ -19,7 +19,7 @@ function boot(save=null){
   const document={getElementById:get,createElement:()=>new Element(),querySelector:()=>[...elements.values()].find(e=>e.open),querySelectorAll:s=>s==='[data-port]'?ports:[],addEventListener(){}};
   const storage=new Map([['packet-post-v1',save]]);let time=0;const context=vm.createContext({document,localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,v)=>storage.set(key,v)},matchMedia:()=>({matches:true}),devicePixelRatio:1,ResizeObserver:class{observe(){}},performance:{now:()=>time},requestAnimationFrame(){},addEventListener(){},lessons,terms,signs,initWorkshop:()=>({open(){},guide(){}}),console,Math,Map,Set,window:{}});
   const source=fs.readFileSync(new URL('../game.js',import.meta.url),'utf8').replace(/^(?:import[^\n]+\n)+/,'');
-  vm.runInContext(source+`;globalThis.game={state:()=>({stage,completed,forwarded,resolved,started,won,visited:[...visited],x:player.x,y:player.y}),visit:id=>{const m=mailbox(buildings.find(b=>b.id===id));player.x=m.x;player.y=m.y;tick(performance.now());},visitSign:id=>{const s=trail.find(t=>t.id===id);player.x=s.x;player.y=s.y;tick(performance.now());},move:()=>{keys.add('d');tick(40);keys.clear();},interact,blocked,navigate,route:()=>path,draw,tick};`,context);
+  vm.runInContext(source+`;globalThis.game={state:()=>({stage,completed,forwarded,resolved,started,won,visited:[...visited],x:player.x,y:player.y}),visit:id=>{const m=mailbox(buildings.find(b=>b.id===id));player.x=m.x;player.y=m.y;tick(performance.now());},visitSign:id=>{const s=trail.find(t=>t.id===id);player.x=s.x;player.y=s.y;tick(performance.now());},move:()=>{keys.add('d');tick(40);keys.clear();},buildings,roads,interact,blocked,navigate,route:()=>path,draw,tick};`,context);
   return {game:context.game,get,ports,start:()=>get('start-btn').onclick(),next:()=>get('next-btn').onclick(),stored:()=>storage.get('packet-post-v1')};
 }
 test('complete all six deliveries with enforced gateway, DNS, and port steps',()=>{
@@ -57,4 +57,11 @@ test('signboards are discovered in the world and never lock movement',()=>{
 
 test('sign reading temporarily folds delivery feedback without losing next delivery',()=>{
  const b=boot();b.game.visit('five');b.game.interact();assert.equal(b.game.state().won,true);b.game.visitSign('welcome');b.game.interact();assert.equal(b.get('celebration').hidden,true);b.get('sign-close').onclick();assert.equal(b.get('celebration').hidden,false);b.next();assert.equal(b.game.state().stage,1);
+});
+
+test('road surfaces never cross solid device footprints',()=>{
+ const {game}=boot();for(const [a,b]of game.roads)for(const device of game.buildings){
+ const left=Math.min(a[0],b[0])-38,right=Math.max(a[0],b[0])+38,top=Math.min(a[1],b[1])-38,bottom=Math.max(a[1],b[1])+38;
+ assert.ok(right<=device.x-device.w/2||left>=device.x+device.w/2||bottom<=device.y-device.d/2||top>=device.y+device.d/2,`road crosses ${device.id}`);
+ }
 });
