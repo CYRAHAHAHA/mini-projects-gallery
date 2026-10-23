@@ -26,7 +26,7 @@ const buildings=[
 const spriteNames=['packet-depot','desktop-client','phone-client','printer-client','laptop-workshop','router','dns-directory','web-server','remote-host','tree','signboard','mailbox','postman'];
 spriteNames.push(...Array.from({length:8},(_,i)=>'postman-walk-'+i));
 const sprites=new Map();
-if(typeof Image!=='undefined')for(const name of spriteNames){const img=new Image();img.src='./assets/sprites/'+name+'.svg';sprites.set(name,img);}
+if(typeof Image!=='undefined')for(const name of spriteNames){const img=new Image();img.src='./assets/sprites/'+name+'.svg?v=2.3.0';sprites.set(name,img);}
 function sprite(name,x,y,size=240){const img=sprites.get(name);if(!img?.complete||!img.naturalWidth)return false;ctx.drawImage(img,x-size/2,y-size*220/240,size,size*260/240);return true;}
 const modelById={post:'packet-depot',five:'desktop-client',eight:'phone-client',twelve:'printer-client',spare:'laptop-workshop',router:'router',dns:'dns-directory',bakery:'web-server',remote:'remote-host'};
 const names={post:'Packet depot',five:'Desktop client',eight:'Phone client',twelve:'Network printer',spare:'Old laptop · Workshop',router:'Router · Gateway',dns:'DNS directory',bakery:'Bakery · Web server',remote:'Remote host'};
