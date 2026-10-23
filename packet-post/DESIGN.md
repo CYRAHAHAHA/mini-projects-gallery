@@ -47,3 +47,12 @@ Fifteen cube-style signboards introduce packet/IP, localhost, subnet/gateway, fi
 World artwork combines authored SVG sprites and Canvas ground geometry; native QA captures live under .impeccable/review and are not shipping assets. Runtime remains dependency-free vanilla HTML/CSS/JS. Native Canvas was used only for QA.
 
 Independent review found no material visual defects and approved shipping at the Canvas scope. Native Canvas captures cover desktop, mobile, and the remote network; browser HUD rendering and touch/device behavior remain unverified.
+
+
+## Music, camera, and walking
+
+An original 96 BPM pentatonic electronic score uses Web Audio: quiet triangle arpeggios, sine bass, and a bell-like melody over a 16-bar loop. It starts after a user gesture; the sound button mutes music and effects together and remembers the preference. Pause and hidden tabs suspend audio. Nodes disconnect after playback and a short scheduling horizon prevents a backlog after inactivity.
+
+Camera following clamps to the world rectangle independently of player movement. Resize updates the bounds and minimum zoom to cover extreme aspect ratios. The postman uses eight SVG walking poses at 12 frames/second, alternating lifted feet and counter-swinging arms, a slight body bounce, and horizontal facing. Idle, blocked movement, and reduced-motion preference use the still pose.
+
+Regression checks cover camera containment, movement at a clamped edge, audio scheduling, context reuse, and mute/resume. Native Canvas world and walking-pose captures were inspected. Browser audio listening and touch behavior remain unverified.

@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import fs from 'node:fs';
 import {lessons,terms} from '../lessons.js';
 import {signs} from '../trail.js';
-function boot(save=null){
+function boot(save=null,AudioContext=null){
   const elements=new Map(),ctx=new Proxy({},{get:()=>()=>{}});
   class Element{
     constructor(){this.hidden=false;this.open=false;this.textContent='';this.style={};this.children=[];this.dataset={};this.handlers={};}
@@ -17,9 +17,9 @@ function boot(save=null){
   const get=id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);};
   const ports=[25,443,22].map(v=>{const b=new Element();b.dataset.port=''+v;return b;});
   const document={getElementById:get,createElement:()=>new Element(),querySelector:()=>[...elements.values()].find(e=>e.open),querySelectorAll:s=>s==='[data-port]'?ports:[],addEventListener(){}};
-  const storage=new Map([['packet-post-v1',save]]);let time=0;const context=vm.createContext({document,localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,v)=>storage.set(key,v)},matchMedia:()=>({matches:true}),devicePixelRatio:1,ResizeObserver:class{observe(){}},performance:{now:()=>time},requestAnimationFrame(){},addEventListener(){},lessons,terms,signs,initWorkshop:()=>({open(){},guide(){}}),console,Math,Map,Set,window:{}});
+  const storage=new Map([['packet-post-v1',save]]);let time=0;const context=vm.createContext({document,localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,v)=>storage.set(key,v)},matchMedia:()=>({matches:true}),devicePixelRatio:1,ResizeObserver:class{observe(){}},performance:{now:()=>time},requestAnimationFrame(){},addEventListener(){},lessons,terms,signs,initWorkshop:()=>({open(){},guide(){}}),console,Math,Map,Set,window:{AudioContext}});
   const source=fs.readFileSync(new URL('../game.js',import.meta.url),'utf8').replace(/^(?:import[^\n]+\n)+/,'');
-  vm.runInContext(source+`;globalThis.game={state:()=>({stage,completed,forwarded,resolved,started,won,visited:[...visited],x:player.x,y:player.y}),visit:id=>{const m=mailbox(buildings.find(b=>b.id===id));player.x=m.x;player.y=m.y;tick(performance.now());},visitSign:id=>{const s=trail.find(t=>t.id===id);player.x=s.x;player.y=s.y;tick(performance.now());},move:()=>{keys.add('d');tick(40);keys.clear();},buildings,roads,interact,blocked,navigate,route:()=>path,draw,tick};`,context);
+  vm.runInContext(source+`;globalThis.game={state:()=>({stage,completed,forwarded,resolved,started,won,visited:[...visited],x:player.x,y:player.y}),visit:id=>{const m=mailbox(buildings.find(b=>b.id===id));player.x=m.x;player.y=m.y;tick(performance.now());},visitSign:id=>{const s=trail.find(t=>t.id===id);player.x=s.x;player.y=s.y;tick(performance.now());},move:()=>{keys.add('d');tick(40);keys.clear();},cameraTarget,resize,camera,player,keys,startAudio,musicTick,hushAudio,audioState:()=>({sound,audio,musicStep}),setViewport:(w,h)=>{width=w;height=h;zoom=Math.max(w/WIDTH,h/(HEIGHT*SCALE_Y),.73);clampCamera();},buildings,roads,interact,blocked,navigate,route:()=>path,draw,tick};`,context);
   return {game:context.game,get,ports,start:()=>get('start-btn').onclick(),next:()=>get('next-btn').onclick(),stored:()=>storage.get('packet-post-v1')};
 }
 test('complete all six deliveries with enforced gateway, DNS, and port steps',()=>{
@@ -65,3 +65,14 @@ test('road surfaces never cross solid device footprints',()=>{
  assert.ok(right<=device.x-device.w/2||left>=device.x+device.w/2||bottom<=device.y-device.d/2||top>=device.y+device.d/2,`road crosses ${device.id}`);
  }
 });
+
+test('camera contains all viewport corners at world edges and extreme aspect ratios',()=>{
+ const {game:g}=boot();for(const [w,h]of [[390,778],[1440,824],[3440,1440],[800,1600]]){g.setViewport(w,h);for(const [x,y]of [[0,0],[2080,1450],[470,780]]){const c=g.cameraTarget(x,y),z=Math.max(w/2080,h/(1450*.76),.73);assert.ok(c.x-w/(2*z)>=-.001);assert.ok(c.x+w/(2*z)<=2080.001);assert.ok(c.y-h/(2*z*.76)>=-.001);assert.ok(c.y+h/(2*z*.76)<=1450.001);}}
+});
+test('soundtrack schedules bounded notes, reuses audio context, and respects mute',()=>{
+ let contexts=0,notes=0;
+ class AudioContext{constructor(){contexts++;this.currentTime=0;this.state='suspended';this.destination={};}resume(){this.state='running';return Promise.resolve();}suspend(){this.state='suspended';return Promise.resolve();}createGain(){return{gain:{value:0,setValueAtTime(){},linearRampToValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){},disconnect(){}};}createOscillator(){return{frequency:{value:0},connect(){},disconnect(){},start(){notes++;},stop(){}};}}
+ const {game:g,get}=boot(null,AudioContext);g.startAudio();g.startAudio();assert.equal(contexts,1);g.musicTick();assert.ok(notes>=3);const scheduled=notes;g.musicTick();assert.equal(notes,scheduled);get('sound-btn').onclick();assert.equal(g.audioState().sound,false);assert.equal(g.audioState().audio.state,'suspended');g.musicTick();assert.equal(notes,scheduled);get('sound-btn').onclick();assert.equal(g.audioState().audio.state,'running');assert.equal(contexts,1);g.hushAudio();assert.equal(g.audioState().audio.state,'suspended');
+});
+
+test('player keeps walking while camera is held at the left edge',()=>{const {game:g}=boot();g.setViewport(1440,824);g.player.x=200;g.player.y=780;g.camera.x=0;g.draw();const edge=g.camera.x;g.keys.add('d');g.tick(40);g.keys.clear();assert.ok(g.player.x>200);assert.equal(g.camera.x,edge);});

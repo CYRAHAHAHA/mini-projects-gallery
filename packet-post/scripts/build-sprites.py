@@ -47,7 +47,18 @@ s+=label('REMOTE HOST',51,222,12);save('remote-host',s)
 s=cube(107,166,17,54,15,('#ba9863','#9b794b','#705b3f'))+cube(62,85,94,80,31,mint)+cube(80,51,59,49,23,('#b7eb93','#7ecb71','#4c9b67'));save('tree',s)
 s=cube(99,132,12,89,10,cream)+cube(26,96,176,69,12,('#ffedbd','#ffdda0','#ba8d50'))+rect(34,104,160,51,'#fff8dc');save('signboard',s)
 s=cube(103,166,9,51,8,cream)+cube(81,132,53,39,12,blue)+rect(88,143,38,5,'#f7f5d4')+rect(136,115,5,35,'#e98669')+rect(141,115,17,12,'#f8ae75');save('mailbox',s)
-# Small block-bodied courier; separate legs are animated by the renderer.
-s=cube(83,122,61,63,16,blue)+cube(79,68,65,55,17,('#ffe5b5','#f3bf8c','#d99468'))+cube(72,54,80,20,20,blue)+cube(77,74,82,7,24,ink)+rect(96,93,5,6,'#263c49')+rect(125,93,5,6,'#263c49')+rect(108,108,12,3,'#b66f51')+poly('84,126 92,126 145,170 137,175','#ffd57e')+cube(130,152,30,33,9,gold)+cube(70,130,13,43,8,cream)+cube(148,129,12,32,8,cream)
-save('postman',s)
+# Eight authored walking poses; feet stay grounded while arms counter-swing.
+import math
+body=cube(83,122,61,63,16,blue)+cube(79,68,65,55,17,('#ffe5b5','#f3bf8c','#d99468'))+cube(72,54,80,20,20,blue)+cube(77,74,82,7,24,ink)+rect(96,93,5,6,'#263c49')+rect(125,93,5,6,'#263c49')+rect(108,108,12,3,'#b66f51')+poly('84,126 92,126 145,170 137,175','#ffd57e')+cube(130,152,30,33,9,gold)
+for frame in range(9):
+ phase=math.sin(frame*math.pi/4) if frame<8 else 0
+ legs=''
+ for x,direction in [(87,1),(122,-1)]:
+  shift=phase*direction*12
+  legs+=cube(x+shift*.8,183,17,28-max(0,shift)*.75,8,ink)+cube(x-4+shift*.8,207-max(0,shift)*.75,24,10,10,ink)
+ arms=''
+ for x,direction in [(70,-1),(148,1)]:
+  angle=phase*direction*24
+  arms+=f'<g transform="rotate({angle} {x+7} 132)">'+cube(x,129,13,43,8,cream)+'</g>'
+ save('postman-walk-'+str(frame) if frame<8 else 'postman',legs+arms+body)
 print('Authored',len(list(OUT.glob('*.svg'))),'SVG sprites')
