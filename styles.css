@@ -57,6 +57,7 @@ h1 {
 .commute .card-art { background: #c0d9ed; color: #0d4169; }
 .stickers .card-art { background: #ffcf5c; color: #5e3514; }
 .bto .card-art { background: #a7dbb3; color: #164b3f; }
+.haze .card-art { background: #9bc7c8; color: #164c55; }
 
 .card-art {
   position: relative;
@@ -85,6 +86,9 @@ h1 {
 .commute .card-body { background: #edf7ff; }
 .stickers .card-body { background: #fff4d5; }
 .bto .card-body { background: #eff8e9; }
+.haze .card-body { background: #e9f5f3; }
+
+.haze-mark { width: min(82%, 290px); }
 
 h2, p { margin-top: 0; }
 
@@ -156,6 +160,10 @@ h2 {
   }
 
   .bto h2 { max-width: 15ch; }
+
+  .bto, .haze { grid-column: span 6; min-height: 480px; flex-direction: column; }
+  .bto .card-art { width: auto; min-height: 205px; }
+  .bto .card-body { justify-content: flex-start; padding: 1.35rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

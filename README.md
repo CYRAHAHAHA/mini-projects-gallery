@@ -1,10 +1,11 @@
 # Mini Projects Gallery
 
-A small, public directory for three browser-based tools:
+A small, public directory for four browser-based tools:
 
 - [SUTD Commute Cost](https://cyrahahaha.github.io/sutd-commute-cost/)
 - [Sticker Studio](https://cyrahahaha.github.io/sticker-studio/)
 - [BTO Budget Calculator](https://cyrahahaha.github.io/BTO-Budget-Calculator/)
+- [Singapore Haze Readings](https://cyrahahaha.github.io/haze-readings/)
 
 It is a dependency-free static site designed for GitHub Pages. It has no forms, analytics, accounts, or saved user inputs.
 

@@ -15,6 +15,9 @@ colors:
   sticker-surface: "#fff4d5"
   home-art: "#a7dbb3"
   home-surface: "#eff8e9"
+  haze-art: "#9bc7c8"
+  haze-surface: "#e9f5f3"
+  haze-ink: "#164c55"
 typography:
   display:
     fontFamily: "ui-rounded, Aptos, Segoe UI, system-ui, sans-serif"
@@ -83,7 +86,7 @@ The layout earns attention through one plain-language title and a deliberate shi
 
 ## Colors
 
-The palette uses a stable dark frame and three cheerful, task-specific project worlds.
+The palette uses a stable dark frame and four cheerful, task-specific project worlds.
 
 ### Primary
 
@@ -96,13 +99,14 @@ The palette uses a stable dark frame and three cheerful, task-specific project w
 - **Commute Blue:** route and transit world for SUTD Commute Cost.
 - **Label Yellow:** printed-paper world for Sticker Studio.
 - **Home Green:** planning world for the BTO Budget Calculator.
+- **Haze Teal:** map and air-quality world for Singapore Haze Readings.
 
 ### Neutral
 
 - **Soft Ink:** secondary copy on the shared dark frame.
 - **Tool Surfaces:** pale companion surfaces that preserve contrast within each project world.
 
-**The Distinct Tool Rule.** Every project gets one coloured art field and one pale content field; do not introduce a fourth accent or blend the projects into one brand colour.
+**The Distinct Tool Rule.** Every project gets one coloured art field and one pale content field; keep each tool's accent distinct.
 
 **The Poster Illustration Rule.** Illustrations are authored as simple, high-legibility SVG geometry in the established heavy rounded stroke. Do not substitute stock imagery, emoji, generic icon sets, or a different illustration treatment.
 
@@ -124,7 +128,7 @@ The palette uses a stable dark frame and three cheerful, task-specific project w
 
 ## Layout
 
-The content container is mobile-first. Phones use a single full-width vertical tool stack; at 700px and above, the first two cards share a row and the BTO card spans beneath them with its artwork and copy side by side. The page stays capped at 1180px so the grid remains compact rather than stretching across wide displays. The 1rem outer gap and 1.35rem card interiors keep touch reading comfortable.
+The content container is mobile-first. Phones use a single full-width vertical tool stack; at 700px and above, the four cards form a two-column grid. The page stays capped at 1180px so the grid remains compact rather than stretching across wide displays. The 1rem outer gap and 1.35rem card interiors keep touch reading comfortable.
 
 The page should remain a short, scannable visit: one title, then the tools, with no desktop-only content.
 

@@ -28,7 +28,7 @@ Visitors arrive from a shared link, the owner's GitHub profile, or another tool.
 
 ## Capabilities and Constraints
 
-- Displays three live GitHub Pages projects as linked project cards.
+- Displays four live GitHub Pages projects as linked project cards.
 - Contains no accounts, forms, analytics, persistence, or user-input collection.
 - Must remain deployable as a GitHub Pages static site.
 - Future projects in the `mini_projects` parent folder should use the parent-scoped Impeccable skill for styling work.
@@ -43,6 +43,7 @@ Visitors arrive from a shared link, the owner's GitHub profile, or another tool.
 - SUTD Commute Cost: `https://cyrahahaha.github.io/sutd-commute-cost/`
 - Sticker Studio: `https://cyrahahaha.github.io/sticker-studio/`
 - BTO Budget Calculator: `https://cyrahahaha.github.io/BTO-Budget-Calculator/`
+- Singapore Haze Readings: `https://cyrahahaha.github.io/haze-readings/`
 - The existing repository READMEs provide the project descriptions.
 
 ## Product Principles
