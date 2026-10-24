@@ -4,7 +4,7 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#faf6ed"><meta name="description" content="Explore a colorful networking world as a tiny postman. Move immediately, discover signboard lessons, deliver packets, and solve home server challenges.">
   <title>Packet Post — From packets to home servers</title>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./workshop.css"><link rel="stylesheet" href="./world.css?v=2.6.0">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./workshop.css"><link rel="stylesheet" href="./world.css?v=2.7.0">
 </head>
 <body>
   <div class="topbar floating-tools">
@@ -23,6 +23,7 @@
       <div class="mentor"><div class="mentor-face" aria-hidden="true">•ᴗ•</div><p id="mentor">Take your time. Good networks aren’t built in a rush.</p></div>
       <button id="help-btn" class="text-button help-button">Movement & controls <span>?</span></button>
     </aside>
+    <button id="bag-btn" class="bag-button" aria-label="Open packet satchel">💼 <span>Packet bag</span></button><dialog id="packet-bag"><button id="bag-close" class="close" aria-label="Close packet bag">×</button><h2>Your packet satchel</h2><div id="bag-content"></div></dialog>
     <section class="playfield" aria-label="Packet Post game">
       <canvas id="world" tabindex="0" aria-label="Scrolling networking town. Move with arrow keys or WASD; E or Space to interact. You can also click or tap to walk."></canvas>
       <section id="story-task" class="story-task" aria-label="Your current delivery">
@@ -95,6 +96,6 @@
   <dialog id="ports"><h2>Right device. Which application?</h2><p>The destination IP identifies the device. The destination port identifies a service on that device. Your packet needs <b>HTTPS, port 443</b>.</p><div class="port-options"><button data-port="25">25 <small>SMTP · email</small></button><button data-port="443">443 <small>HTTPS · secure web</small></button><button data-port="22">22 <small>SSH · remote access</small></button></div><p id="port-feedback" role="status"></p><button class="close" aria-label="Close port selection">×</button></dialog>
   <dialog id="paused"><h2>Taking a little breather.</h2><p>Your packets can wait. Pick up where you left off.</p><button id="resume-btn" class="primary">Back to the route →</button></dialog>
   <dialog id="lab-guide"><button id="lab-guide-close" class="close" aria-label="Close workshop field guide">×</button><h2>Your home-server field guide</h2><p>Reference these terms when a problem makes them useful. Your completed repairs and explanations are saved below.</p><div id="lab-glossary"></div><h2 class="lab-notebook-title">Your repair notebook</h2><div id="lab-records"></div><p class="fine-print">Teaching approach: guided examples, goal-directed practice, progressively revealed hints, explanatory feedback, and later challenges that reuse earlier skills. This game has not been evaluated for learning effectiveness.</p><p class="fine-print"><a href="https://ies.ed.gov/ncee/wwc/PracticeGuide/1" target="_blank" rel="noopener">IES practice guide</a> · <a href="https://www.cmu.edu/teaching/principles/learning.html" target="_blank" rel="noopener">Carnegie Mellon learning principles</a> · <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/set_up_a_local_testing_server" target="_blank" rel="noopener">MDN: a local testing server</a></p></dialog>
-  <script type="module" src="./game.js?v=2.6.0"></script>
+  <script type="module" src="./game.js?v=2.7.0"></script>
 </body>
 </html>

@@ -59,3 +59,7 @@ Regression checks cover camera containment, movement at a clamped edge, audio sc
 Mobile world text remains small; full browser behavior is unverified.
 
 The final code review resolved keyboard level selection, independent completion markers, glossary availability, and map hints. Native Canvas map captures were inspected; full browser UI remains unverified.
+
+
+## Packet learning update
+Twelve selectable stages: six narrative deliveries followed by six independent networking decision exercises covering MAC, ARP, next-hop selection, routing-table lookup, TTL, and frame replacement. A wrong choice explains the mechanism and allows retry; correct choices at the receiver complete the stage. The satchel button opens source/destination/payload details, an explicitly illustrative curl request, lifecycle and router explanations, two-link MAC examples, and stage learning. Commands are never executed. Dispatch visibility is an explicit preference persisted independently and retained while walking or changing levels. Existing workshop remains available. Logic tests cover all advanced exercise completions and persistent dispatch; full browser UI testing remains unavailable.
